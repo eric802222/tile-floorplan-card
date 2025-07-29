@@ -11,11 +11,16 @@ class FloorplanCard extends HTMLElement {
       this._hass = hass;
       this.render();
     }
+
+    _isEditMode() {
+      const root = this.closest('ha-panel-lovelace');
+      return root && root.lovelace && root.lovelace.editMode;
+    }
   
-    render() {
-      if (!this._hass || !this.config) return;
-      const grid = this.config.grid;
-      const objects = (this.config.objects || []).sort((a, b) => a.z - b.z);
+  render() {
+    if (!this._hass || !this.config) return;
+    const grid = this.config.grid;
+    const objects = (this.config.objects || []).sort((a, b) => a.z - b.z);
   
       const style = `
         <style>
@@ -31,10 +36,44 @@ class FloorplanCard extends HTMLElement {
             position: absolute;
             cursor: pointer;
           }
+          .grid-lines {
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+              linear-gradient(to right, rgba(0,0,0,0.3) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(0,0,0,0.3) 1px, transparent 1px);
+            background-size: calc(100% / ${grid.width}) calc(100% / ${grid.height});
+            background-repeat: repeat;
+            z-index: 1000;
+          }
+          .coord {
+            position: absolute;
+            font-size: 10px;
+            color: #000;
+            background: rgba(255,255,255,0.7);
+            padding: 1px 2px;
+            pointer-events: none;
+            z-index: 1001;
+          }
         </style>
       `;
   
       let html = `<div class="floorplan">`;
+
+      if (this._isEditMode()) {
+        html += `<div class="grid-lines"></div>`;
+        for (let y = 0; y < grid.height; y++) {
+          for (let x = 0; x < grid.width; x++) {
+            const left = (x / grid.width) * 100;
+            const top = (y / grid.height) * 100;
+            html += `<div class="coord" style="left:${left}%; top:${top}%">${x},${y}</div>`;
+          }
+        }
+      }
   
       for (const obj of objects) {
         let img = obj.images?.default;
