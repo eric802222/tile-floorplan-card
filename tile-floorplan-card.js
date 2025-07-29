@@ -1,7 +1,7 @@
 class FloorplanCard extends HTMLElement {
     setConfig(config) {
       if (!config.grid) {
-        throw new Error("You need to define a grid with width, height, and tile_size");
+        throw new Error("You need to define a grid with width and height");
       }
       this.config = config;
       this.attachShadow({ mode: "open" });
@@ -21,8 +21,8 @@ class FloorplanCard extends HTMLElement {
         <style>
           .floorplan {
             position: relative;
-            width: ${grid.width * grid.tile_size}px;
-            height: ${grid.height * grid.tile_size}px;
+            width: 100%;
+            aspect-ratio: ${grid.width}/${grid.height};
             background: url(${grid.background}) no-repeat;
             background-size: cover;
             image-rendering: pixelated;
@@ -53,19 +53,19 @@ class FloorplanCard extends HTMLElement {
           }
         }
   
-        const left = obj.x * grid.tile_size;
-        const top = obj.y * grid.tile_size;
-        const width = (obj.width || 1) * grid.tile_size;
-        const height = (obj.height || 1) * grid.tile_size;
+        const left = (obj.x / grid.width) * 100;
+        const top = (obj.y / grid.height) * 100;
+        const width = ((obj.width || 1) / grid.width) * 100;
+        const height = ((obj.height || 1) / grid.height) * 100;
   
         html += `
           <img src="${img}"
             class="object"
             style="
-              left:${left}px;
-              top:${top}px;
-              width:${width}px;
-              height:${height}px;
+              left:${left}%;
+              top:${top}%;
+              width:${width}%;
+              height:${height}%;
               z-index:${obj.z};
             "
             data-entity="${obj.entity_id || ""}"

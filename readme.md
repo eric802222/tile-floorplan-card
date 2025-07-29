@@ -9,6 +9,7 @@ A Home Assistant Lovelace card for creating **RPG-style floor plans** with grid-
 - Conditional rendering of entity/virtual object images
 - Virtual objects (non-entity) for effects like shadows, highlights, or decorations
 - Click on entities to toggle or perform HA services
+- Responsive layout that scales to the width of its container
 
 
 ## 📦 Installation via HACS
@@ -34,7 +35,7 @@ type: custom:ha-floorplan-card
 grid:
   width: 20
   height: 15
-  tile_size: 32
+  tile_size: 32  # optional, kept for backward compatibility
   background: /local/floorplans/livingroom.png
 objects:
   - id: lamp_1
