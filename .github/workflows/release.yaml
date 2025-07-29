@@ -21,4 +21,4 @@ jobs:
           files: |
             tile-floorplan-card.js
             tile-floorplan-card-editor.js
-          token: ${{ secrets.RELEASE_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
