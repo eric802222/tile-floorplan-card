@@ -13,8 +13,7 @@ class FloorplanCard extends HTMLElement {
     }
 
     _isEditMode() {
-      const root = this.closest('ha-panel-lovelace');
-      return root && root.lovelace && root.lovelace.editMode;
+      return this._hass?.editMode;
     }
   
   render() {
