@@ -17,9 +17,13 @@ A Home Assistant Lovelace card for creating **RPG-style floor plans** with grid-
 https://github.com/eric802222/tile-floorplan-card
 Category: Lovelace
 3. Search for **Tile Floorplan Card** in HACS and install
-4. Add resource in **Lovelace → Resources**:  
+4. Add resource in **Lovelace → Resources**:
 url: /hacsfiles/tile-floorplan-card/tile-floorplan-card.js
 type: module
+
+After adding the resource, you can create the card directly from the Lovelace UI
+by selecting **Tile Floorplan Card** from the card picker. A basic editor lets yo
+u adjust grid settings and manage objects in JSON form without editing YAML.
 
 ## ⚙️ Example Configuration
 type: custom:ha-floorplan-card
