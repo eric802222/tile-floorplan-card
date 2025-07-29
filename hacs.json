@@ -2,8 +2,16 @@
     "name": "Tile Floorplan Card",
     "render_readme": true,
     "content_in_root": true,
-    "filename": "tile-floorplan-card.js",
-    "extra_files": ["tile-floorplan-card-editor.js"],
+    "resources": [
+        {
+          "file": "tile-floorplan-card.js",
+          "type": "module"
+        },
+        {
+          "file": "tile-floorplan-card-editor.js",
+          "type": "module"
+        }
+    ]
     "domains": [],
     "country": "ALL",
     "homeassistant": "2024.1.0",
