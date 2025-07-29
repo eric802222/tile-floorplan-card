@@ -93,7 +93,31 @@ class FloorplanCard extends HTMLElement {
     getCardSize() {
       return 5;
     }
+
+    static async getConfigElement() {
+      await import('./tile-floorplan-card-editor.js');
+      return document.createElement('ha-floorplan-card-editor');
+    }
+
+    static getStubConfig() {
+      return {
+        grid: {
+          width: 5,
+          height: 5,
+          tile_size: 32,
+          background: ''
+        },
+        objects: []
+      };
+    }
   }
-  
+
   customElements.define("ha-floorplan-card", FloorplanCard);
-  
+
+  if (!window.customCards) window.customCards = [];
+  window.customCards.push({
+    type: "ha-floorplan-card",
+    name: "Tile Floorplan Card",
+    description: "RPG-style floor plan with clickable entities",
+  });
+
