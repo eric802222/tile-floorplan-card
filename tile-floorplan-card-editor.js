@@ -64,7 +64,7 @@ class FloorplanCardEditor extends HTMLElement {
       // ignore JSON errors
     }
     this._config = {
-      type: 'custom:ha-floorplan-card'
+      type: 'custom:ha-floorplan-card',
       grid: {
         width,
         height,
