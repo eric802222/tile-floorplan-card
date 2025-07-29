@@ -18,7 +18,7 @@ https://github.com/eric802222/tile-floorplan-card
 Category: Lovelace
 3. Search for **Tile Floorplan Card** in HACS and install
 4. Add resource in **Lovelace → Resources**:  
-url: /hacsfiles/ha-floorplan-card/floorplan-card.js
+url: /hacsfiles/tile-floorplan-card/tile-floorplan-card.js
 type: module
 
 ## ⚙️ Example Configuration
