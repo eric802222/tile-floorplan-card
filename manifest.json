@@ -1,0 +1,10 @@
+{
+    "domain": "tile_floorplan_card",
+    "name": "Tile Floorplan Card",
+    "documentation": "https://github.com/eric802222/tile-floorplan-card",
+    "issue_tracker": "https://github.com/eric802222/tile-floorplan-card/issues",
+    "version": "1.0.0",
+    "requirements": [],
+    "dependencies": [],
+    "codeowners": ["@eric802222"]
+  }

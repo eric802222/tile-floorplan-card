@@ -1,0 +1,10 @@
+{
+    "name": "Tile Floorplan Card",
+    "render_readme": true,
+    "content_in_root": true,
+    "filename": "tile-floorplan-card.js",
+    "domains": [],
+    "country": "ALL",
+    "homeassistant": "2024.1.0",
+    "iot_class": "local_polling"
+  }
