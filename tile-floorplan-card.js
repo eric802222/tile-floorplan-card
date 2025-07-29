@@ -95,7 +95,7 @@ class FloorplanCard extends HTMLElement {
     }
 
     static async getConfigElement() {
-      await import('./tile-floorplan-card-editor.js');
+      await import(new URL('./tile-floorplan-card-editor.js', import.meta.url));
       return document.createElement('ha-floorplan-card-editor');
     }
 
