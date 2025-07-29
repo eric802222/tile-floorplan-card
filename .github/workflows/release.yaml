@@ -4,6 +4,9 @@ on:
   push:
     tags:
       - "v*"
+      
+permissions:
+  contents: write
 
 jobs:
   release:
@@ -18,3 +21,4 @@ jobs:
           files: |
             tile-floorplan-card.js
             tile-floorplan-card-editor.js
+          token: ${{ secrets.RELEASE_TOKEN }}
