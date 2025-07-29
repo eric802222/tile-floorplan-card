@@ -15,4 +15,6 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: www/community/tile-floorplan-card/tile-floorplan-card.js 
+          files: |
+            tile-floorplan-card.js
+            tile-floorplan-card-editor.js
