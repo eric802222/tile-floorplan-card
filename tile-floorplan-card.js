@@ -13,6 +13,8 @@ class FloorplanCard extends HTMLElement {
     }
 
     _isEditMode() {
+        console.log(this._hass);
+        return true;
       return this._hass?.editMode;
     }
   
