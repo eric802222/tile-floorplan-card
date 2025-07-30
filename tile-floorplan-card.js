@@ -162,6 +162,15 @@ class FloorplanCardEditor extends HTMLElement {
   }
 
   _renderObject(obj, index) {
+    const imgs = Object.entries(obj.images || {}).filter(([s]) => s !== 'default');
+    const imgsHtml = imgs.map(([state, url]) => `
+        <div class="image-item" data-state="${state}">
+          <input class="img-state" placeholder="state" value="${state}">
+          <input class="img-url" placeholder="image" value="${url}">
+          <button class="remove-image" type="button">Remove</button>
+        </div>
+      `).join('');
+
     return `
       <div class="object-item" data-index="${index}">
         <img class="preview" src="${obj.images?.default || ''}" alt="">
@@ -176,7 +185,9 @@ class FloorplanCardEditor extends HTMLElement {
         <input class="z" type="number" placeholder="z" value="${obj.z ?? ''}">
         <input class="width" type="number" placeholder="w" value="${obj.width ?? 1}">
         <input class="height" type="number" placeholder="h" value="${obj.height ?? 1}">
-        <input class="img-default" placeholder="image" value="${obj.images?.default || ''}">
+        <input class="img-default" placeholder="default image" value="${obj.images?.default || ''}">
+        <div class="image-list">${imgsHtml}</div>
+        <button class="add-image" type="button">Add Image</button>
         <button class="remove-object">Remove</button>
       </div>`;
   }
@@ -193,6 +204,9 @@ class FloorplanCardEditor extends HTMLElement {
         .form input, .form select { width: 100%; box-sizing: border-box; }
         .object-item { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 8px; }
         .object-item img.preview { width: 40px; height: 40px; object-fit: contain; }
+        .image-list { width: 100%; }
+        .image-item { display: flex; width: 100%; gap: 4px; margin-top: 4px; }
+        .image-item input { flex: 1; }
       </style>
       <div class="form">
         <label>Grid Width</label>
@@ -226,6 +240,30 @@ class FloorplanCardEditor extends HTMLElement {
       });
     });
 
+    this.querySelectorAll('.add-image').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this._valueChanged();
+        const idx = parseInt(btn.closest('.object-item').dataset.index);
+        const obj = this._config.objects[idx];
+        if (!obj.images) obj.images = {};
+        let placeholder = `state${Date.now()}`;
+        obj.images[placeholder] = '';
+        this.render();
+        this._emitChange();
+      });
+    });
+
+    this.querySelectorAll('.remove-image').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this._valueChanged();
+        const objIdx = parseInt(btn.closest('.object-item').dataset.index);
+        const state = btn.parentElement.dataset.state;
+        delete this._config.objects[objIdx].images[state];
+        this.render();
+        this._emitChange();
+      });
+    });
+
     this.querySelectorAll('input, select').forEach(el => {
       el.addEventListener('change', () => this._valueChanged());
     });
@@ -250,6 +288,12 @@ class FloorplanCardEditor extends HTMLElement {
         height: parseInt(item.querySelector('.height').value || '1'),
         images: { default: item.querySelector('.img-default').value }
       };
+      item.querySelectorAll('.image-item').forEach(imgItem => {
+        const state = imgItem.querySelector('.img-state').value;
+        const url = imgItem.querySelector('.img-url').value;
+        if (state) obj.images[state] = url;
+      });
+
       item.querySelector('.preview').src = obj.images.default;
       objects.push(obj);
     });
