@@ -6,10 +6,6 @@
         {
           "file": "tile-floorplan-card.js",
           "type": "module"
-        },
-        {
-          "file": "tile-floorplan-card-editor.js",
-          "type": "module"
         }
     ],
     "domains": [],

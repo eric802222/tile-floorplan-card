@@ -23,13 +23,11 @@ Category: Lovelace
 url: /hacsfiles/tile-floorplan-card/tile-floorplan-card.js
 type: module
 
-HACS will also fetch `tile-floorplan-card-editor.js`, which provides the card's
-Lovelace editor interface. The `hacs.json` manifest now lists this file so no
-manual changes are needed.
-
-After adding the resource, you can create the card directly from the Lovelace UI
-by selecting **Tile Floorplan Card** from the card picker. A basic editor lets yo
-u adjust grid settings and manage objects in JSON form without editing YAML.
+The editor interface is bundled with the same JS file, so no extra resources are
+needed. After adding the resource, you can create the card directly from the
+Lovelace UI by selecting **Tile Floorplan Card** from the card picker. A basic
+editor lets you adjust grid settings and manage objects in JSON form without
+editing YAML.
 
 ## ⚙️ Example Configuration
 type: custom:ha-floorplan-card
