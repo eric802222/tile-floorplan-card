@@ -19,7 +19,7 @@ class FloorplanCard extends HTMLElement {
   render() {
     if (!this._hass || !this.config) return;
     const grid = this.config.grid;
-    const objects = (this.config.objects || []).sort((a, b) => a.z - b.z);
+    const objects = [...(this.config.objects || [])].sort((a, b) => a.z - b.z);
   
       const style = `
         <style>
