@@ -13,8 +13,6 @@ class FloorplanCard extends HTMLElement {
     }
 
     _isEditMode() {
-        console.log(this._hass);
-        return true;
       return this._hass?.editMode;
     }
   
@@ -135,7 +133,7 @@ class FloorplanCard extends HTMLElement {
     }
 
     static async getConfigElement() {
-      await import(new URL('./tile-floorplan-card-editor.js', import.meta.url));
+      await import('./tile-floorplan-card-editor.js');
       return document.createElement('ha-floorplan-card-editor');
     }
 
