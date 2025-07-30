@@ -11,6 +11,7 @@ A Home Assistant Lovelace card for creating **RPG-style floor plans** with grid-
 - Click on entities to toggle or perform HA services
 - Responsive layout that scales to the width of its container
 - Edit mode overlay with grid lines and coordinate labels for easier placement
+- Editor now supports multiple state-based images per object
 
 
 ## 📦 Installation via HACS
