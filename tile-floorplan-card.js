@@ -34,6 +34,7 @@ class FloorplanCard extends HTMLElement {
           .object {
             position: absolute;
             cursor: pointer;
+            display: block;
           }
           .grid-lines {
             pointer-events: none;
@@ -97,17 +98,20 @@ class FloorplanCard extends HTMLElement {
         const height = ((obj.height || 1) / grid.height) * 100;
   
         html += `
-          <img src="${img}"
-            class="object"
+          <div class="object"
             style="
               left:${left}%;
               top:${top}%;
               width:${width}%;
               height:${height}%;
               z-index:${obj.z};
+              background-image: url('${img}');
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center;
             "
             data-entity="${obj.entity_id || ""}"
-          />
+          ></div>
         `;
       }
   
