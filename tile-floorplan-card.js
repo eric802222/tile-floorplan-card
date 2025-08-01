@@ -12,8 +12,8 @@ class FloorplanCard extends HTMLElement {
       this.render();
     }
 
-    _isEditMode() {
-      return this._hass?.editMode;
+    _showOverlay() {
+      return !!this.config.show_grid;
     }
   
   render() {
@@ -64,7 +64,7 @@ class FloorplanCard extends HTMLElement {
   
       let html = `<div class="floorplan">`;
 
-      if (this._isEditMode()) {
+      if (this._showOverlay()) {
         html += `<div class="grid-lines"></div>`;
         for (let y = 0; y < grid.height; y++) {
           for (let x = 0; x < grid.width; x++) {
@@ -148,6 +148,7 @@ class FloorplanCard extends HTMLElement {
           tile_size: 32,
           background: ''
         },
+        show_grid: false,
         objects: []
       };
     }
@@ -156,6 +157,7 @@ class FloorplanCard extends HTMLElement {
 class FloorplanCardEditor extends HTMLElement {
   setConfig(config) {
     this._config = config || {};
+    if (typeof this._config.show_grid === 'undefined') this._config.show_grid = false;
     if (!Array.isArray(this._config.objects)) this._config.objects = [];
     if (!this.isConnected) return;
     this.render();
@@ -221,6 +223,8 @@ class FloorplanCardEditor extends HTMLElement {
         <input id="grid_tile_size" type="number" value="${this._config.grid.tile_size || ''}">
         <label>Background URL</label>
         <input id="grid_background" type="text" value="${this._config.grid.background || ''}">
+        <label>Show Grid Overlay</label>
+        <input id="show_grid" type="checkbox" ${this._config.show_grid ? 'checked' : ''}>
         <div class="objects">${objectsHtml}</div>
         <button class="add-object" type="button">Add Item</button>
       </div>
@@ -278,6 +282,7 @@ class FloorplanCardEditor extends HTMLElement {
     const height = parseInt(this.querySelector('#grid_height').value || '0');
     const tileSize = parseInt(this.querySelector('#grid_tile_size').value || '0');
     const background = this.querySelector('#grid_background').value || '';
+    const showGrid = this.querySelector('#show_grid').checked;
 
     const objects = [];
     this.querySelectorAll('.object-item').forEach(item => {
@@ -305,6 +310,7 @@ class FloorplanCardEditor extends HTMLElement {
     this._config = {
       type: 'custom:ha-floorplan-card',
       grid: { width, height, tile_size: tileSize, background },
+      show_grid: showGrid,
       objects,
     };
     this._emitChange();
