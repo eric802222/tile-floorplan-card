@@ -12,6 +12,9 @@ A Home Assistant Lovelace card for creating **RPG-style floor plans** with grid-
 - Responsive layout that scales to the width of its container
 - Optional overlay with grid lines and coordinate labels for easier placement
 - Editor now supports multiple state-based images per object
+- Drag-and-drop object positioning with grid snapping
+- Configurable Home Assistant tap actions
+- Safe, non-destructive editing that preserves conditions and custom fields
 
 
 ## 📦 Installation via HACS
@@ -50,6 +53,8 @@ objects:
     images:
       on: /local/icons/lamp_on.png
       off: /local/icons/lamp_off.png
+    tap_action:
+      action: toggle
 
   - id: shadow_area
     type: virtual
@@ -65,6 +70,36 @@ objects:
           entity_id: switch.night_mode
           state: on
         image: /local/effects/shadow_night.png
+
+## 🎮 Visual RPG Map Editor
+
+The Lovelace editor includes an interactive map preview. Drag an object to snap
+it to the logical grid, then fine-tune its coordinates, size and layer in the
+object form. The default tile size is 16 pixels, matching classic handheld RPG
+asset workflows, while the card remains responsive on phones and tablets.
+
+Supported tap actions:
+
+- `toggle`
+- `more-info`
+- `call-service`
+- `navigate`
+- `url`
+- `none`
+
+Existing configurations remain compatible. Unknown object fields and
+`conditions` are preserved when the visual editor changes another property.
+
+## 🛠️ Development
+
+```bash
+npm install
+npm test
+npm run build
+```
+
+The source lives in `src/`. Vite bundles Lit and the card into the single
+`tile-floorplan-card.js` file consumed by HACS.
 
 ## 📄 License
 MIT License
