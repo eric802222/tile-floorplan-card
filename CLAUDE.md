@@ -40,3 +40,18 @@ npm run map:render -- card-config.json \
   --states assets/states.example.json \
   --output map-preview.png
 ```
+
+For state coverage and visual regression, keep a reviewed scenario set and PNG
+baselines in version control:
+
+```bash
+cp assets/scenarios.example.json assets/scenarios.json
+npm run map:scenarios -- card-config.json --www-root /config/www \
+  --scenarios assets/scenarios.json --output-dir map-scenarios
+npm run map:diff -- map-scenarios/evening.png baselines/evening.png \
+  --max-ratio 0 --threshold 0
+```
+
+Review `overview.png`, then review each diff report and its highlighted PNG. Update a
+baseline only when the map change is intentional; never hide a regression by raising
+the threshold without documenting why.

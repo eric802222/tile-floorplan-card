@@ -1,0 +1,28 @@
+{
+  "scenarios": [
+    {
+      "id": "all-off",
+      "name": "All devices off",
+      "states": {
+        "light.living_room": "off",
+        "fan.bedroom": "off"
+      }
+    },
+    {
+      "id": "evening",
+      "name": "Evening lights",
+      "states": {
+        "light.living_room": "on",
+        "fan.bedroom": "off"
+      }
+    },
+    {
+      "id": "device-unavailable",
+      "name": "Unavailable devices",
+      "states": {
+        "light.living_room": "unavailable",
+        "fan.bedroom": "unavailable"
+      }
+    }
+  ]
+}
