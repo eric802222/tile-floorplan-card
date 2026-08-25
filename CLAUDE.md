@@ -50,8 +50,14 @@ npm run map:scenarios -- card-config.json --www-root /config/www \
   --scenarios assets/scenarios.json --output-dir map-scenarios
 npm run map:diff -- map-scenarios/evening.png baselines/evening.png \
   --max-ratio 0 --threshold 0
+npm run map:regress -- --scenarios-report map-scenarios/scenarios.report.json \
+  --baseline-dir baselines --diff-dir map-diffs --max-ratio 0
 ```
 
 Review `overview.png`, then review each diff report and its highlighted PNG. Update a
 baseline only when the map change is intentional; never hide a regression by raising
 the threshold without documenting why.
+
+Use `map:regress` in CI. It compares the complete scenario report, fails on missing
+baselines, lists stale baseline PNGs, and writes one aggregate JSON report. Upload
+`map-diffs/` and `map-regression.report.json` as CI artifacts when the job fails.
