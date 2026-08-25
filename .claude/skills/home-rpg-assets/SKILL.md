@@ -46,6 +46,10 @@ individual tiles, furniture or state variants would preserve editability.
     missing baselines and stale baselines before accepting or updating a baseline.
 13. Run tests and build the HACS bundle after source changes.
 
+When GitHub Actions is available, use `.github/actions/map-visual-regression` to run
+steps 11–12 in CI and retain its artifact as review evidence. A failed action is a
+validation failure; inspect the artifact instead of automatically changing baselines.
+
 Read [references/manifest-schema.md](references/manifest-schema.md) when creating or
 debugging a manifest. Read the repository `CLAUDE.md` for commands and environment
 variables.

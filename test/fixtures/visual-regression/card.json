@@ -1,0 +1,17 @@
+{
+  "grid": { "width": 2, "height": 1, "tile_size": 16 },
+  "assets": [
+    {
+      "id": "lamp",
+      "width": 1,
+      "height": 1,
+      "images": {
+        "default": "/local/rpg/lamp-off.svg",
+        "on": "/local/rpg/lamp-on.svg"
+      }
+    }
+  ],
+  "objects": [
+    { "id": "lamp-1", "asset_id": "lamp", "entity_id": "light.room", "x": 1, "y": 0 }
+  ]
+}
