@@ -1,6 +1,6 @@
 {
   "name": "tile-floorplan-card",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,6 +9,8 @@
     "test": "vitest run",
     "assets:generate": "node tools/generate-assets.js",
     "assets:dry-run": "node tools/generate-assets.js --dry-run",
+    "assets:process": "node tools/process-assets.js",
+    "assets:preview": "node tools/preview-assets.js",
     "assets:validate": "node tools/validate-assets.js",
     "map:validate": "node tools/validate-map.js"
   },

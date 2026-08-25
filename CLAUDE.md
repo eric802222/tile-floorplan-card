@@ -26,5 +26,7 @@ npm run assets:generate -- assets/manifest.json
 ```
 
 Use `npm run assets:dry-run -- assets/manifest.json` to inspect prompts and
-requests without credentials or network calls. Copy generated PNGs into Home
-Assistant's `/config/www/rpg/`; merge `assets.card.json` into the card config.
+requests without credentials or network calls. After generation, run
+`assets:process`, `assets:preview`, and strict `assets:validate` in that order.
+Copy processed PNGs into Home Assistant's `/config/www/rpg/`; merge
+`assets.card.json` into the card config.
