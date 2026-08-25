@@ -200,6 +200,29 @@ Home Assistant Entity ID syntax and supported actions. Both commands emit stable
 JSON reports so Claude Code can decide whether to regenerate an image, run a
 post-processing tool, or only correct map configuration.
 
+### Offline map rendering
+
+Render the complete Card or Tiled map before copying it into Home Assistant:
+
+```bash
+npm run map:render -- card-config.json \
+  --www-root /config/www \
+  --states assets/states.example.json \
+  --output map-preview.png \
+  --report map-preview.report.json \
+  --scale 4
+```
+
+The renderer uses the same asset inheritance, entity-state image selection,
+conditions and z-order rules as the Lovelace card. `/local/...` URLs resolve
+against `--www-root`, matching Home Assistant's `/config/www` mapping. It
+accepts Card JSON or Tiled `.tmj` input and can optionally include `--show-grid`.
+
+Every render produces a JSON report listing placed and skipped objects, selected
+states, pixel bounds, unreadable files and unsupported remote URLs. Use multiple
+state profiles to review lights, fans, doors and conditional effects before
+deployment.
+
 ## 🛠️ Development
 
 ```bash

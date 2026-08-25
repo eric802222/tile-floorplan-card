@@ -30,3 +30,13 @@ requests without credentials or network calls. After generation, run
 `assets:process`, `assets:preview`, and strict `assets:validate` in that order.
 Copy processed PNGs into Home Assistant's `/config/www/rpg/`; merge
 `assets.card.json` into the card config.
+
+Before deployment, render the complete map with representative Home Assistant
+states and inspect both the PNG and its JSON report:
+
+```bash
+npm run map:render -- card-config.json \
+  --www-root /config/www \
+  --states assets/states.example.json \
+  --output map-preview.png
+```
