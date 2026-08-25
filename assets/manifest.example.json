@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "tile_size": 16,
+  "image_size": "1024x1024",
+  "output_dir": "generated",
+  "card_asset_base": "/local/rpg",
+  "style_prompt": "Original cozy handheld-era monster-catching RPG pixel art, top-down cutaway interior, limited warm palette, crisp hard pixel edges, consistent upper-left lighting.",
+  "background_prompt": "Pure #FF00FF chroma-key background, no floor, no scenery.",
+  "assets": [
+    {
+      "id": "floor-lamp",
+      "name": "Floor Lamp",
+      "width": 1,
+      "height": 2,
+      "tags": ["light", "living-room"],
+      "prompt": "A compact wooden standing floor lamp viewed from above.",
+      "states": {
+        "default": { "prompt": "Lamp switched off, shade dark." },
+        "on": { "prompt": "Lamp switched on, warm yellow glow contained close to the shade." }
+      }
+    },
+    {
+      "id": "green-sofa",
+      "name": "Green Sofa",
+      "width": 3,
+      "height": 2,
+      "tags": ["furniture", "living-room"],
+      "prompt": "A cozy three-seat muted green fabric sofa with two cushions.",
+      "states": { "default": {} }
+    }
+  ]
+}

@@ -132,6 +132,35 @@ Tiled uses pixel coordinates while the card uses logical grid coordinates. The
 converter applies `tile_size` automatically, so a position at `(64, 96)` in a
 16-pixel Tiled map becomes `(4, 6)` in the card.
 
+## 🤖 Claude Code and AI Asset Generation
+
+Claude Code is the workflow orchestrator. The card does not call an LLM or
+image provider and never stores API credentials. A local CLI reads a versioned
+asset manifest and calls any image service implementing the OpenAI-compatible
+`/v1/images/generations` request and response shape.
+
+```bash
+cp assets/manifest.example.json assets/manifest.json
+
+# Inspect every generated request without credentials
+npm run assets:dry-run -- assets/manifest.json
+
+# Generate with an OpenAI-compatible provider
+AI_BASE_URL=https://provider.example \
+AI_API_KEY=your-key \
+AI_IMAGE_MODEL=your-image-model \
+npm run assets:generate -- assets/manifest.json
+```
+
+Optional `AI_IMAGE_PATH` overrides the default `/v1/images/generations`
+endpoint. Providers may return either `data[0].b64_json` or `data[0].url`.
+Generated files use stable names such as `floor-lamp-default.png` and
+`floor-lamp-on.png`; `assets.card.json` contains the reusable Card asset config.
+
+This separation keeps the UI provider-independent: switching from one hosted
+model, proxy, gateway or local OpenAI-compatible server requires environment
+changes only, not a new HACS build.
+
 ## 🛠️ Development
 
 ```bash
