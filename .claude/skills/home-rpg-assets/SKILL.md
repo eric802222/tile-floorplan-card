@@ -41,8 +41,9 @@ individual tiles, furniture or state variants would preserve editability.
 11. Maintain `assets/scenarios.json` with normal, active and unavailable device states.
     Run `npm run map:scenarios` and inspect the complete-map `overview.png`; do not
     approve assets based only on the asset contact sheet.
-12. Compare scenario PNGs to reviewed baselines with `npm run map:diff`. Inspect the
-    highlighted diff and JSON bounds before accepting or updating a baseline.
+12. Compare the complete scenario set to reviewed baselines with `npm run map:regress`.
+    Use `map:diff` for investigating one image. Inspect highlighted diffs, JSON bounds,
+    missing baselines and stale baselines before accepting or updating a baseline.
 13. Run tests and build the HACS bundle after source changes.
 
 Read [references/manifest-schema.md](references/manifest-schema.md) when creating or
