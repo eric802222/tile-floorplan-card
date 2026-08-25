@@ -2,6 +2,7 @@
   "schema_version": 1,
   "tile_size": 16,
   "image_size": "1024x1024",
+  "max_colors": 64,
   "output_dir": "generated",
   "card_asset_base": "/local/rpg",
   "style_prompt": "Original cozy handheld-era monster-catching RPG pixel art, top-down cutaway interior, limited warm palette, crisp hard pixel edges, consistent upper-left lighting.",

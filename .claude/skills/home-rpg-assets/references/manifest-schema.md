@@ -9,6 +9,7 @@
 - `output_dir`: directory under the manifest directory.
 - `card_asset_base`: Home Assistant `/local/...` URL prefix.
 - `quality`: optional OpenAI-compatible quality value.
+- `max_colors`: production palette limit; defaults to `64`.
 - `assets`: one or more asset definitions.
 
 Each asset requires:
@@ -24,3 +25,7 @@ override `prompt`, `size` and `quality`.
 The generator creates `<asset-id>-<state>.png` and an `assets.card.json` fragment.
 Providers must accept an OpenAI-compatible JSON images request and return either
 `data[0].b64_json` or `data[0].url`.
+
+Strict validation requires final PNG dimensions to equal `width × tile_size` by
+`height × tile_size`, an alpha channel, no partial-alpha edge pixels, no remaining
+magenta chroma key, and no more than `max_colors` visible RGBA colors.

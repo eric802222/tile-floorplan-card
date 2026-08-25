@@ -161,6 +161,28 @@ This separation keeps the UI provider-independent: switching from one hosted
 model, proxy, gateway or local OpenAI-compatible server requires environment
 changes only, not a new HACS build.
 
+### Validation reports
+
+Before accepting generated art, validate every expected state and production
+constraint:
+
+```bash
+npm run assets:validate -- assets/manifest.json
+npm run assets:validate -- assets/manifest.json --strict --report assets-report.json
+npm run map:validate -- card-config.json --report map-report.json
+npm run map:validate -- home-floorplan.tmj
+```
+
+Asset validation checks missing/corrupt files, PNG format, logical dimensions,
+alpha-channel quality, remaining chroma-key pixels, palette size and identical
+state images. Non-strict mode reports production-quality findings as warnings;
+`--strict` turns them into failures.
+
+Map validation checks duplicate IDs, unknown `asset_id` references, map bounds,
+Home Assistant Entity ID syntax and supported actions. Both commands emit stable
+JSON reports so Claude Code can decide whether to regenerate an image, run a
+post-processing tool, or only correct map configuration.
+
 ## 🛠️ Development
 
 ```bash
