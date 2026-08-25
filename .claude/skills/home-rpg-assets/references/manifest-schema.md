@@ -7,9 +7,14 @@
 - `style_prompt`: shared perspective, palette, outline and lighting rules.
 - `background_prompt`: isolation or chroma-key requirement.
 - `output_dir`: directory under the manifest directory.
+- `raw_dir`: provider output before deterministic processing; use a different
+  directory from `output_dir` for production workflows.
 - `card_asset_base`: Home Assistant `/local/...` URL prefix.
 - `quality`: optional OpenAI-compatible quality value.
 - `max_colors`: production palette limit; defaults to `64`.
+- `chroma_color`, `chroma_tolerance`: background removal color and distance.
+- `alpha_threshold`: converts soft alpha edges to either transparent or opaque.
+- `anchor`: `bottom` for furniture/devices or `center` for effects.
 - `assets`: one or more asset definitions.
 
 Each asset requires:

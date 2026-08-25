@@ -157,6 +157,23 @@ endpoint. Providers may return either `data[0].b64_json` or `data[0].url`.
 Generated files use stable names such as `floor-lamp-default.png` and
 `floor-lamp-on.png`; `assets.card.json` contains the reusable Card asset config.
 
+Raw provider output should not be used directly in the map. The deterministic
+post-processing and visual review steps are:
+
+```bash
+npm run assets:process -- assets/manifest.json
+npm run assets:preview -- assets/manifest.json
+npm run assets:validate -- assets/manifest.json --strict
+```
+
+`assets:process` removes the configured chroma color, converts soft alpha edges
+to pixel-art transparency, trims the subject, scales with nearest-neighbor
+sampling, anchors it on the logical canvas and constrains the PNG palette.
+
+`assets:preview` creates `contact-sheet.png`, showing every asset and state at a
+consistent review scale. Claude Code should inspect this sheet for inconsistent
+identity, lighting, perspective and relative size before accepting the set.
+
 This separation keeps the UI provider-independent: switching from one hosted
 model, proxy, gateway or local OpenAI-compatible server requires environment
 changes only, not a new HACS build.

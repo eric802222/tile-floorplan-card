@@ -28,13 +28,17 @@ individual tiles, furniture or state variants would preserve editability.
 4. Run `npm run assets:dry-run -- assets/manifest.json` and review every job.
 5. When generation is authorized and provider variables are configured, run
    `npm run assets:generate -- assets/manifest.json`.
-6. Check that every expected PNG and `assets.card.json` exists. Reject inconsistent
+6. Run `npm run assets:process -- assets/manifest.json` to remove chroma, snap
+   alpha, resize with nearest-neighbor sampling and constrain the palette.
+7. Run `npm run assets:preview -- assets/manifest.json` and inspect
+   `contact-sheet.png` for identity, perspective, scale and state consistency.
+8. Check that every expected PNG and `assets.card.json` exists. Reject inconsistent
    scale, perspective, lighting or state identity rather than compensating in the map.
    Run `npm run assets:validate -- assets/manifest.json --strict` before accepting
    production assets.
-7. Add the assets to the card config and place them through the editor or Tiled.
-8. Run `npm run map:validate -- <card.json|map.tmj>` after placement.
-9. Run tests and build the HACS bundle after source changes.
+9. Add the assets to the card config and place them through the editor or Tiled.
+10. Run `npm run map:validate -- <card.json|map.tmj>` after placement.
+11. Run tests and build the HACS bundle after source changes.
 
 Read [references/manifest-schema.md](references/manifest-schema.md) when creating or
 debugging a manifest. Read the repository `CLAUDE.md` for commands and environment

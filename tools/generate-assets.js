@@ -10,9 +10,11 @@ const manifestPath = resolve(positional[0] || "assets/manifest.json");
 const manifest = validateManifest(JSON.parse(await readFile(manifestPath, "utf8")));
 const manifestDir = dirname(manifestPath);
 const outputDir = resolve(manifestDir, manifest.output_dir || "generated");
+const rawDir = resolve(manifestDir, manifest.raw_dir || manifest.output_dir || "generated");
 const relativeOutput = relative(manifestDir, outputDir);
-if (isAbsolute(relativeOutput) || relativeOutput.startsWith("..")) {
-  throw new Error("output_dir must stay inside the manifest directory");
+const relativeRaw = relative(manifestDir, rawDir);
+if ([relativeOutput, relativeRaw].some((path) => isAbsolute(path) || path.startsWith(".."))) {
+  throw new Error("raw_dir and output_dir must stay inside the manifest directory");
 }
 
 const baseUrl = (process.env.AI_BASE_URL || "https://api.openai.com").replace(/\/$/, "");
@@ -23,6 +25,7 @@ const jobs = generationJobs(manifest);
 
 if (!dryRun && !apiKey) throw new Error("Set AI_API_KEY (or OPENAI_API_KEY) before generating assets");
 await mkdir(outputDir, { recursive: true });
+await mkdir(rawDir, { recursive: true });
 
 for (const job of jobs) {
   const request = {
@@ -57,7 +60,7 @@ for (const job of jobs) {
   } else {
     throw new Error("Image API result needs b64_json or url");
   }
-  await writeFile(join(outputDir, normalize(job.output)), bytes);
+  await writeFile(join(rawDir, normalize(job.output)), bytes);
   console.log(`Generated ${job.output}`);
 }
 
