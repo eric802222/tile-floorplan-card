@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { actionForObject, clampObject, imageForObject, normalizeConfig } from "../src/config.js";
+import { actionForObject, clampObject, imageForObject, normalizeConfig, resolveObject } from "../src/config.js";
 
 describe("configuration", () => {
   it("normalizes legacy configuration without discarding custom fields", () => {
@@ -29,5 +29,13 @@ describe("configuration", () => {
 
   it("provides legacy toggle behavior", () => {
     expect(actionForObject({ entity_id: "switch.fan" })).toEqual({ action: "toggle" });
+  });
+
+  it("resolves reusable asset defaults with object state overrides", () => {
+    const object = resolveObject(
+      { asset_id: "fan", images: { on: "fan-on.png" } },
+      [{ id: "fan", width: 2, height: 2, images: { default: "fan.png", off: "fan-off.png" } }],
+    );
+    expect(object).toMatchObject({ width: 2, height: 2, images: { default: "fan.png", off: "fan-off.png", on: "fan-on.png" } });
   });
 });

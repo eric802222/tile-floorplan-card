@@ -1,5 +1,6 @@
 import { LitElement, css, html, nothing } from "lit";
-import { clampObject, imageForObject, normalizeConfig } from "./config.js";
+import { clampObject, imageForObject, normalizeConfig, resolveObject } from "./config.js";
+import { exportTiled, importTiled } from "./tiled.js";
 
 export class TileFloorplanCardEditor extends LitElement {
   static properties = {
@@ -32,6 +33,10 @@ export class TileFloorplanCardEditor extends LitElement {
     .toolbar, .row { display: flex; gap: 8px; align-items: center; }
     .toolbar { justify-content: space-between; }
     .objects { display: grid; gap: 10px; }
+    .asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+    .asset { display: grid; gap: 6px; padding: 8px; border: 1px solid var(--divider-color); border-radius: 8px; }
+    .asset img { width: 100%; height: 64px; object-fit: contain; image-rendering: pixelated; background: var(--secondary-background-color); }
+    .asset button { width: 100%; }
     details { border: 1px solid var(--divider-color); border-radius: 8px; padding: 8px; }
     summary { cursor: pointer; }
     .object-fields { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
@@ -88,6 +93,59 @@ export class TileFloorplanCardEditor extends LitElement {
     this._selected = index;
   }
 
+  _addAsset() {
+    const index = this.config.assets.length;
+    this._emit({ ...this.config, assets: [...this.config.assets, {
+      id: `asset-${index + 1}`, name: `Asset ${index + 1}`,
+      width: 1, height: 1, images: { default: "" },
+    }] });
+  }
+
+  _updateAsset(index, patch) {
+    const previousId = this.config.assets[index].id;
+    const assets = this.config.assets.map((asset, i) => i === index ? { ...asset, ...patch } : asset);
+    const objects = patch.id && patch.id !== previousId
+      ? this.config.objects.map(object => object.asset_id === previousId ? { ...object, asset_id: patch.id } : object)
+      : this.config.objects;
+    this._emit({ ...this.config, assets, objects });
+  }
+
+  _removeAsset(index) {
+    this._emit({ ...this.config, assets: this.config.assets.filter((_, i) => i !== index) });
+  }
+
+  _placeAsset(asset) {
+    const index = this.config.objects.length;
+    this._emit({ ...this.config, objects: [...this.config.objects, {
+      id: `${asset.id}-${index + 1}`, type: "virtual", asset_id: asset.id,
+      x: 0, y: 0, z: index, width: asset.width, height: asset.height, images: {},
+    }] });
+    this._selected = index;
+  }
+
+  _downloadTiled() {
+    const blob = new Blob([JSON.stringify(exportTiled(this.config), null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "home-floorplan.tmj";
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async _importTiled(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    try {
+      this._emit(importTiled(JSON.parse(await file.text()), this.config));
+      this._selected = undefined;
+    } catch (error) {
+      alert(`Unable to import Tiled map: ${error.message}`);
+    } finally {
+      event.target.value = "";
+    }
+  }
+
   _removeObject(index) {
     this._emit({ ...this.config, objects: this.config.objects.filter((_, i) => i !== index) });
     this._selected = undefined;
@@ -97,7 +155,7 @@ export class TileFloorplanCardEditor extends LitElement {
     event.preventDefault();
     this._selected = index;
     const stage = this.renderRoot.querySelector(".stage");
-    const object = this.config.objects[index];
+    const object = resolveObject(this.config.objects[index], this.config.assets);
     const rect = stage.getBoundingClientRect();
     const start = { x: event.clientX, y: event.clientY, object, rect };
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -117,6 +175,7 @@ export class TileFloorplanCardEditor extends LitElement {
   }
 
   _stageObject(object, index) {
+    object = resolveObject(object, this.config.assets);
     const { grid } = this.config;
     const image = imageForObject(object, this.hass);
     const style = [
@@ -129,6 +188,7 @@ export class TileFloorplanCardEditor extends LitElement {
   }
 
   _objectForm(object, index) {
+    const resolved = resolveObject(object, this.config.assets);
     const action = object.tap_action?.action || (object.entity_id ? "toggle" : "none");
     return html`<details ?open=${this._selected === index} @toggle=${(event) => {
       if (event.currentTarget.open) this._selected = index;
@@ -138,7 +198,10 @@ export class TileFloorplanCardEditor extends LitElement {
         <label class="span-2">ID<input .value=${object.id} @change=${e => this._updateObject(index, { id: e.target.value })}></label>
         <label class="span-2">Entity ID<input .value=${object.entity_id || ""} @change=${e => this._updateObject(index, { entity_id: e.target.value })}></label>
         ${["x", "y", "z", "width", "height"].map(key => html`<label>${key}<input type="number" step=${key === "width" || key === "height" ? ".25" : "1"}
-          .value=${String(object[key])} @change=${e => this._updateObject(index, { [key]: Number(e.target.value) })}></label>`)}
+          .value=${String(resolved[key] ?? "")} @change=${e => this._updateObject(index, { [key]: Number(e.target.value) })}></label>`)}
+        <label class="span-2">Asset<select .value=${object.asset_id || ""} @change=${e => this._updateObject(index, { asset_id: e.target.value })}>
+          <option value="">None</option>${this.config.assets.map(asset => html`<option value=${asset.id}>${asset.name}</option>`)}
+        </select></label>
         <label class="span-2">Default image<input .value=${object.images?.default || ""} @change=${e => this._updateImage(index, "default", e.target.value)}></label>
         <label>On image<input .value=${object.images?.on || ""} @change=${e => this._updateImage(index, "on", e.target.value)}></label>
         <label>Off image<input .value=${object.images?.off || ""} @change=${e => this._updateImage(index, "off", e.target.value)}></label>
@@ -176,6 +239,23 @@ export class TileFloorplanCardEditor extends LitElement {
         ${this.config.objects.map((object, index) => this._stageObject(object, index))}
         <div class="grid" style=${gridStyle}></div>
       </div>
+      <div class="toolbar"><strong>Asset library (${this.config.assets.length})</strong><button type="button" @click=${this._addAsset}>Add asset</button></div>
+      <div class="asset-grid">${this.config.assets.map((asset, index) => html`
+        <div class="asset">
+          ${asset.images?.default ? html`<img src=${asset.images.default} alt=${asset.name}>` : html`<div class="hint">No image</div>`}
+          <input aria-label="Asset ID" .value=${asset.id} @change=${e => this._updateAsset(index, { id: e.target.value })}>
+          <input aria-label="Asset name" .value=${asset.name} @change=${e => this._updateAsset(index, { name: e.target.value })}>
+          <input aria-label="Asset image" placeholder="Image URL" .value=${asset.images?.default || ""} @change=${e => this._updateAsset(index, { images: { ...asset.images, default: e.target.value } })}>
+          <div class="row"><input aria-label="Asset width" type="number" min=".25" step=".25" .value=${String(asset.width)} @change=${e => this._updateAsset(index, { width: Number(e.target.value) })}>
+          <input aria-label="Asset height" type="number" min=".25" step=".25" .value=${String(asset.height)} @change=${e => this._updateAsset(index, { height: Number(e.target.value) })}></div>
+          <button type="button" @click=${() => this._placeAsset(asset)}>Place</button>
+          <button class="danger" type="button" @click=${() => this._removeAsset(index)}>Remove</button>
+        </div>`)}
+      </div>
+      <div class="toolbar"><strong>Tiled</strong><div class="row">
+        <label><span class="hint">Import .tmj</span><input type="file" accept=".tmj,.json,application/json" @change=${this._importTiled}></label>
+        <button type="button" @click=${this._downloadTiled}>Export .tmj</button>
+      </div></div>
       <div class="toolbar"><strong>Objects (${this.config.objects.length})</strong><button type="button" @click=${this._addObject}>Add object</button></div>
       <div class="objects">${this.config.objects.map((object, index) => this._objectForm(object, index))}</div>
     </div>`;

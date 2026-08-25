@@ -2,6 +2,7 @@ export const DEFAULT_CONFIG = Object.freeze({
   type: "custom:ha-floorplan-card",
   grid: { width: 20, height: 15, tile_size: 16, background: "" },
   show_grid: false,
+  assets: [],
   objects: [],
 });
 
@@ -23,9 +24,35 @@ export function normalizeConfig(input = {}) {
       background: grid.background || "",
     },
     show_grid: Boolean(input.show_grid),
+    assets: Array.isArray(input.assets)
+      ? input.assets.map((asset, index) => normalizeAsset(asset, index))
+      : [],
     objects: Array.isArray(input.objects)
       ? input.objects.map((object, index) => normalizeObject(object, index))
       : [],
+  };
+}
+
+export function normalizeAsset(input = {}, index = 0) {
+  return {
+    ...input,
+    id: input.id || `asset-${index + 1}`,
+    name: input.name || input.id || `Asset ${index + 1}`,
+    width: Math.max(0.25, numberOr(input.width, 1)),
+    height: Math.max(0.25, numberOr(input.height, 1)),
+    images: { ...(input.images || {}) },
+  };
+}
+
+export function resolveObject(object, assets = []) {
+  const asset = assets.find((candidate) => candidate.id === object.asset_id);
+  if (!asset) return object;
+  return {
+    ...asset,
+    ...object,
+    images: { ...asset.images, ...object.images },
+    width: object.width ?? asset.width,
+    height: object.height ?? asset.height,
   };
 }
 
@@ -37,8 +64,8 @@ export function normalizeObject(input = {}, index = 0) {
     x: numberOr(input.x, 0),
     y: numberOr(input.y, 0),
     z: numberOr(input.z, 0),
-    width: Math.max(0.25, numberOr(input.width, 1)),
-    height: Math.max(0.25, numberOr(input.height, 1)),
+    width: input.width === undefined && input.asset_id ? undefined : Math.max(0.25, numberOr(input.width, 1)),
+    height: input.height === undefined && input.asset_id ? undefined : Math.max(0.25, numberOr(input.height, 1)),
     images: { ...(input.images || {}) },
   };
 }

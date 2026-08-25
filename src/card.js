@@ -1,5 +1,5 @@
 import { LitElement, css, html, nothing } from "lit";
-import { actionForObject, imageForObject, normalizeConfig } from "./config.js";
+import { actionForObject, imageForObject, normalizeConfig, resolveObject } from "./config.js";
 import { executeAction } from "./actions.js";
 
 export class TileFloorplanCard extends LitElement {
@@ -63,6 +63,7 @@ export class TileFloorplanCard extends LitElement {
   }
 
   _objectTemplate(object) {
+    object = resolveObject(object, this.config.assets);
     const grid = this.config.grid;
     const image = imageForObject(object, this.hass);
     if (!image) return nothing;

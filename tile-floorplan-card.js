@@ -1,15 +1,15 @@
-const z = globalThis, I = z.ShadowRoot && (z.ShadyCSS === void 0 || z.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, L = /* @__PURE__ */ Symbol(), V = /* @__PURE__ */ new WeakMap();
-let st = class {
+const M = globalThis, B = M.ShadowRoot && (M.ShadyCSS === void 0 || M.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, J = /* @__PURE__ */ Symbol(), W = /* @__PURE__ */ new WeakMap();
+let ot = class {
   constructor(t, e, i) {
-    if (this._$cssResult$ = !0, i !== L) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
+    if (this._$cssResult$ = !0, i !== J) throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");
     this.cssText = t, this.t = e;
   }
   get styleSheet() {
     let t = this.o;
     const e = this.t;
-    if (I && t === void 0) {
+    if (B && t === void 0) {
       const i = e !== void 0 && e.length === 1;
-      i && (t = V.get(e)), t === void 0 && ((this.o = t = new CSSStyleSheet()).replaceSync(this.cssText), i && V.set(e, t));
+      i && (t = W.get(e)), t === void 0 && ((this.o = t = new CSSStyleSheet()).replaceSync(this.cssText), i && W.set(e, t));
     }
     return t;
   }
@@ -17,28 +17,28 @@ let st = class {
     return this.cssText;
   }
 };
-const dt = (n) => new st(typeof n == "string" ? n : n + "", void 0, L), nt = (n, ...t) => {
-  const e = n.length === 1 ? n[0] : t.reduce((i, s, r) => i + ((o) => {
-    if (o._$cssResult$ === !0) return o.cssText;
-    if (typeof o == "number") return o;
-    throw Error("Value passed to 'css' function must be a 'css' function result: " + o + ". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.");
+const mt = (n) => new ot(typeof n == "string" ? n : n + "", void 0, J), lt = (n, ...t) => {
+  const e = n.length === 1 ? n[0] : t.reduce((i, s, r) => i + ((a) => {
+    if (a._$cssResult$ === !0) return a.cssText;
+    if (typeof a == "number") return a;
+    throw Error("Value passed to 'css' function must be a 'css' function result: " + a + ". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.");
   })(s) + n[r + 1], n[0]);
-  return new st(e, n, L);
-}, pt = (n, t) => {
-  if (I) n.adoptedStyleSheets = t.map((e) => e instanceof CSSStyleSheet ? e : e.styleSheet);
+  return new ot(e, n, J);
+}, ft = (n, t) => {
+  if (B) n.adoptedStyleSheets = t.map((e) => e instanceof CSSStyleSheet ? e : e.styleSheet);
   else for (const e of t) {
-    const i = document.createElement("style"), s = z.litNonce;
+    const i = document.createElement("style"), s = M.litNonce;
     s !== void 0 && i.setAttribute("nonce", s), i.textContent = e.cssText, n.appendChild(i);
   }
-}, W = I ? (n) => n : (n) => n instanceof CSSStyleSheet ? ((t) => {
+}, q = B ? (n) => n : (n) => n instanceof CSSStyleSheet ? ((t) => {
   let e = "";
   for (const i of t.cssRules) e += i.cssText;
-  return dt(e);
+  return mt(e);
 })(n) : n;
-const { is: ut, defineProperty: gt, getOwnPropertyDescriptor: $t, getOwnPropertyNames: ft, getOwnPropertySymbols: mt, getPrototypeOf: _t } = Object, T = globalThis, q = T.trustedTypes, bt = q ? q.emptyScript : "", yt = T.reactiveElementPolyfillSupport, S = (n, t) => n, D = { toAttribute(n, t) {
+const { is: $t, defineProperty: _t, getOwnPropertyDescriptor: bt, getOwnPropertyNames: yt, getOwnPropertySymbols: vt, getPrototypeOf: wt } = Object, R = globalThis, Y = R.trustedTypes, At = Y ? Y.emptyScript : "", xt = R.reactiveElementPolyfillSupport, O = (n, t) => n, D = { toAttribute(n, t) {
   switch (t) {
     case Boolean:
-      n = n ? bt : null;
+      n = n ? At : null;
       break;
     case Object:
     case Array:
@@ -63,8 +63,8 @@ const { is: ut, defineProperty: gt, getOwnPropertyDescriptor: $t, getOwnProperty
       }
   }
   return e;
-} }, rt = (n, t) => !ut(n, t), J = { attribute: !0, type: String, converter: D, reflect: !1, useDefault: !1, hasChanged: rt };
-Symbol.metadata ??= /* @__PURE__ */ Symbol("metadata"), T.litPropertyMetadata ??= /* @__PURE__ */ new WeakMap();
+} }, ht = (n, t) => !$t(n, t), Z = { attribute: !0, type: String, converter: D, reflect: !1, useDefault: !1, hasChanged: ht };
+Symbol.metadata ??= /* @__PURE__ */ Symbol("metadata"), R.litPropertyMetadata ??= /* @__PURE__ */ new WeakMap();
 let v = class extends HTMLElement {
   static addInitializer(t) {
     this._$Ei(), (this.l ??= []).push(t);
@@ -72,35 +72,35 @@ let v = class extends HTMLElement {
   static get observedAttributes() {
     return this.finalize(), this._$Eh && [...this._$Eh.keys()];
   }
-  static createProperty(t, e = J) {
+  static createProperty(t, e = Z) {
     if (e.state && (e.attribute = !1), this._$Ei(), this.prototype.hasOwnProperty(t) && ((e = Object.create(e)).wrapped = !0), this.elementProperties.set(t, e), !e.noAccessor) {
       const i = /* @__PURE__ */ Symbol(), s = this.getPropertyDescriptor(t, i, e);
-      s !== void 0 && gt(this.prototype, t, s);
+      s !== void 0 && _t(this.prototype, t, s);
     }
   }
   static getPropertyDescriptor(t, e, i) {
-    const { get: s, set: r } = $t(this.prototype, t) ?? { get() {
+    const { get: s, set: r } = bt(this.prototype, t) ?? { get() {
       return this[e];
-    }, set(o) {
-      this[e] = o;
+    }, set(a) {
+      this[e] = a;
     } };
-    return { get: s, set(o) {
-      const h = s?.call(this);
-      r?.call(this, o), this.requestUpdate(t, h, i);
+    return { get: s, set(a) {
+      const l = s?.call(this);
+      r?.call(this, a), this.requestUpdate(t, l, i);
     }, configurable: !0, enumerable: !0 };
   }
   static getPropertyOptions(t) {
-    return this.elementProperties.get(t) ?? J;
+    return this.elementProperties.get(t) ?? Z;
   }
   static _$Ei() {
-    if (this.hasOwnProperty(S("elementProperties"))) return;
-    const t = _t(this);
+    if (this.hasOwnProperty(O("elementProperties"))) return;
+    const t = wt(this);
     t.finalize(), t.l !== void 0 && (this.l = [...t.l]), this.elementProperties = new Map(t.elementProperties);
   }
   static finalize() {
-    if (this.hasOwnProperty(S("finalized"))) return;
-    if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(S("properties"))) {
-      const e = this.properties, i = [...ft(e), ...mt(e)];
+    if (this.hasOwnProperty(O("finalized"))) return;
+    if (this.finalized = !0, this._$Ei(), this.hasOwnProperty(O("properties"))) {
+      const e = this.properties, i = [...yt(e), ...vt(e)];
       for (const s of i) this.createProperty(s, e[s]);
     }
     const t = this[Symbol.metadata];
@@ -119,8 +119,8 @@ let v = class extends HTMLElement {
     const e = [];
     if (Array.isArray(t)) {
       const i = new Set(t.flat(1 / 0).reverse());
-      for (const s of i) e.unshift(W(s));
-    } else t !== void 0 && e.push(W(t));
+      for (const s of i) e.unshift(q(s));
+    } else t !== void 0 && e.push(q(t));
     return e;
   }
   static _$Eu(t, e) {
@@ -146,7 +146,7 @@ let v = class extends HTMLElement {
   }
   createRenderRoot() {
     const t = this.shadowRoot ?? this.attachShadow(this.constructor.shadowRootOptions);
-    return pt(t, this.constructor.elementStyles), t;
+    return ft(t, this.constructor.elementStyles), t;
   }
   connectedCallback() {
     this.renderRoot ??= this.createRenderRoot(), this.enableUpdating(!0), this._$EO?.forEach((t) => t.hostConnected?.());
@@ -169,22 +169,22 @@ let v = class extends HTMLElement {
   _$AK(t, e) {
     const i = this.constructor, s = i._$Eh.get(t);
     if (s !== void 0 && this._$Em !== s) {
-      const r = i.getPropertyOptions(s), o = typeof r.converter == "function" ? { fromAttribute: r.converter } : r.converter?.fromAttribute !== void 0 ? r.converter : D;
+      const r = i.getPropertyOptions(s), a = typeof r.converter == "function" ? { fromAttribute: r.converter } : r.converter?.fromAttribute !== void 0 ? r.converter : D;
       this._$Em = s;
-      const h = o.fromAttribute(e, r.type);
-      this[s] = h ?? this._$Ej?.get(s) ?? h, this._$Em = null;
+      const l = a.fromAttribute(e, r.type);
+      this[s] = l ?? this._$Ej?.get(s) ?? l, this._$Em = null;
     }
   }
   requestUpdate(t, e, i, s = !1, r) {
     if (t !== void 0) {
-      const o = this.constructor;
-      if (s === !1 && (r = this[t]), i ??= o.getPropertyOptions(t), !((i.hasChanged ?? rt)(r, e) || i.useDefault && i.reflect && r === this._$Ej?.get(t) && !this.hasAttribute(o._$Eu(t, i)))) return;
+      const a = this.constructor;
+      if (s === !1 && (r = this[t]), i ??= a.getPropertyOptions(t), !((i.hasChanged ?? ht)(r, e) || i.useDefault && i.reflect && r === this._$Ej?.get(t) && !this.hasAttribute(a._$Eu(t, i)))) return;
       this.C(t, e, i);
     }
     this.isUpdatePending === !1 && (this._$ES = this._$EP());
   }
-  C(t, e, { useDefault: i, reflect: s, wrapped: r }, o) {
-    i && !(this._$Ej ??= /* @__PURE__ */ new Map()).has(t) && (this._$Ej.set(t, o ?? e ?? this[t]), r !== !0 || o !== void 0) || (this._$AL.has(t) || (this.hasUpdated || i || (e = void 0), this._$AL.set(t, e)), s === !0 && this._$Em !== t && (this._$Eq ??= /* @__PURE__ */ new Set()).add(t));
+  C(t, e, { useDefault: i, reflect: s, wrapped: r }, a) {
+    i && !(this._$Ej ??= /* @__PURE__ */ new Map()).has(t) && (this._$Ej.set(t, a ?? e ?? this[t]), r !== !0 || a !== void 0) || (this._$AL.has(t) || (this.hasUpdated || i || (e = void 0), this._$AL.set(t, e)), s === !0 && this._$Em !== t && (this._$Eq ??= /* @__PURE__ */ new Set()).add(t));
   }
   async _$EP() {
     this.isUpdatePending = !0;
@@ -208,8 +208,8 @@ let v = class extends HTMLElement {
       }
       const i = this.constructor.elementProperties;
       if (i.size > 0) for (const [s, r] of i) {
-        const { wrapped: o } = r, h = this[s];
-        o !== !0 || this._$AL.has(s) || h === void 0 || this.C(s, void 0, r, h);
+        const { wrapped: a } = r, l = this[s];
+        a !== !0 || this._$AL.has(s) || l === void 0 || this.C(s, void 0, r, l);
       }
     }
     let t = !1;
@@ -246,54 +246,54 @@ let v = class extends HTMLElement {
   firstUpdated(t) {
   }
 };
-v.elementStyles = [], v.shadowRootOptions = { mode: "open" }, v[S("elementProperties")] = /* @__PURE__ */ new Map(), v[S("finalized")] = /* @__PURE__ */ new Map(), yt?.({ ReactiveElement: v }), (T.reactiveElementVersions ??= []).push("2.1.2");
-const B = globalThis, Y = (n) => n, N = B.trustedTypes, Z = N ? N.createPolicy("lit-html", { createHTML: (n) => n }) : void 0, ot = "$lit$", f = `lit$${Math.random().toFixed(9).slice(2)}$`, at = "?" + f, vt = `<${at}>`, y = document, C = () => y.createComment(""), O = (n) => n === null || typeof n != "object" && typeof n != "function", F = Array.isArray, At = (n) => F(n) || typeof n?.[Symbol.iterator] == "function", H = `[ 	
-\f\r]`, x = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, K = /-->/g, X = />/g, _ = RegExp(`>|${H}(?:([^\\s"'>=/]+)(${H}*=${H}*(?:[^ 	
-\f\r"'\`<>=]|("|')|))|$)`, "g"), Q = /'/g, tt = /"/g, lt = /^(?:script|style|textarea|title)$/i, wt = (n) => (t, ...e) => ({ _$litType$: n, strings: t, values: e }), g = wt(1), w = /* @__PURE__ */ Symbol.for("lit-noChange"), c = /* @__PURE__ */ Symbol.for("lit-nothing"), et = /* @__PURE__ */ new WeakMap(), b = y.createTreeWalker(y, 129);
-function ht(n, t) {
-  if (!F(n) || !n.hasOwnProperty("raw")) throw Error("invalid template strings array");
-  return Z !== void 0 ? Z.createHTML(t) : t;
+v.elementStyles = [], v.shadowRootOptions = { mode: "open" }, v[O("elementProperties")] = /* @__PURE__ */ new Map(), v[O("finalized")] = /* @__PURE__ */ new Map(), xt?.({ ReactiveElement: v }), (R.reactiveElementVersions ??= []).push("2.1.2");
+const F = globalThis, K = (n) => n, U = F.trustedTypes, X = U ? U.createPolicy("lit-html", { createHTML: (n) => n }) : void 0, dt = "$lit$", $ = `lit$${Math.random().toFixed(9).slice(2)}$`, ct = "?" + $, Et = `<${ct}>`, y = document, C = () => y.createComment(""), k = (n) => n === null || typeof n != "object" && typeof n != "function", G = Array.isArray, St = (n) => G(n) || typeof n?.[Symbol.iterator] == "function", L = `[ 	
+\f\r]`, S = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, Q = /-->/g, tt = />/g, _ = RegExp(`>|${L}(?:([^\\s"'>=/]+)(${L}*=${L}*(?:[^ 	
+\f\r"'\`<>=]|("|')|))|$)`, "g"), et = /'/g, it = /"/g, pt = /^(?:script|style|textarea|title)$/i, Ot = (n) => (t, ...e) => ({ _$litType$: n, strings: t, values: e }), g = Ot(1), A = /* @__PURE__ */ Symbol.for("lit-noChange"), p = /* @__PURE__ */ Symbol.for("lit-nothing"), st = /* @__PURE__ */ new WeakMap(), b = y.createTreeWalker(y, 129);
+function gt(n, t) {
+  if (!G(n) || !n.hasOwnProperty("raw")) throw Error("invalid template strings array");
+  return X !== void 0 ? X.createHTML(t) : t;
 }
-const Et = (n, t) => {
+const Ct = (n, t) => {
   const e = n.length - 1, i = [];
-  let s, r = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", o = x;
-  for (let h = 0; h < e; h++) {
-    const a = n[h];
-    let d, p, l = -1, u = 0;
-    for (; u < a.length && (o.lastIndex = u, p = o.exec(a), p !== null); ) u = o.lastIndex, o === x ? p[1] === "!--" ? o = K : p[1] !== void 0 ? o = X : p[2] !== void 0 ? (lt.test(p[2]) && (s = RegExp("</" + p[2], "g")), o = _) : p[3] !== void 0 && (o = _) : o === _ ? p[0] === ">" ? (o = s ?? x, l = -1) : p[1] === void 0 ? l = -2 : (l = o.lastIndex - p[2].length, d = p[1], o = p[3] === void 0 ? _ : p[3] === '"' ? tt : Q) : o === tt || o === Q ? o = _ : o === K || o === X ? o = x : (o = _, s = void 0);
-    const $ = o === _ && n[h + 1].startsWith("/>") ? " " : "";
-    r += o === x ? a + vt : l >= 0 ? (i.push(d), a.slice(0, l) + ot + a.slice(l) + f + $) : a + f + (l === -2 ? h : $);
+  let s, r = t === 2 ? "<svg>" : t === 3 ? "<math>" : "", a = S;
+  for (let l = 0; l < e; l++) {
+    const o = n[l];
+    let c, h, d = -1, u = 0;
+    for (; u < o.length && (a.lastIndex = u, h = a.exec(o), h !== null); ) u = a.lastIndex, a === S ? h[1] === "!--" ? a = Q : h[1] !== void 0 ? a = tt : h[2] !== void 0 ? (pt.test(h[2]) && (s = RegExp("</" + h[2], "g")), a = _) : h[3] !== void 0 && (a = _) : a === _ ? h[0] === ">" ? (a = s ?? S, d = -1) : h[1] === void 0 ? d = -2 : (d = a.lastIndex - h[2].length, c = h[1], a = h[3] === void 0 ? _ : h[3] === '"' ? it : et) : a === it || a === et ? a = _ : a === Q || a === tt ? a = S : (a = _, s = void 0);
+    const f = a === _ && n[l + 1].startsWith("/>") ? " " : "";
+    r += a === S ? o + Et : d >= 0 ? (i.push(c), o.slice(0, d) + dt + o.slice(d) + $ + f) : o + $ + (d === -2 ? l : f);
   }
-  return [ht(n, r + (n[e] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), i];
+  return [gt(n, r + (n[e] || "<?>") + (t === 2 ? "</svg>" : t === 3 ? "</math>" : "")), i];
 };
-class k {
+class N {
   constructor({ strings: t, _$litType$: e }, i) {
     let s;
     this.parts = [];
-    let r = 0, o = 0;
-    const h = t.length - 1, a = this.parts, [d, p] = Et(t, e);
-    if (this.el = k.createElement(d, i), b.currentNode = this.el.content, e === 2 || e === 3) {
-      const l = this.el.content.firstChild;
-      l.replaceWith(...l.childNodes);
+    let r = 0, a = 0;
+    const l = t.length - 1, o = this.parts, [c, h] = Ct(t, e);
+    if (this.el = N.createElement(c, i), b.currentNode = this.el.content, e === 2 || e === 3) {
+      const d = this.el.content.firstChild;
+      d.replaceWith(...d.childNodes);
     }
-    for (; (s = b.nextNode()) !== null && a.length < h; ) {
+    for (; (s = b.nextNode()) !== null && o.length < l; ) {
       if (s.nodeType === 1) {
-        if (s.hasAttributes()) for (const l of s.getAttributeNames()) if (l.endsWith(ot)) {
-          const u = p[o++], $ = s.getAttribute(l).split(f), M = /([.?@])?(.*)/.exec(u);
-          a.push({ type: 1, index: r, name: M[2], strings: $, ctor: M[1] === "." ? St : M[1] === "?" ? Ct : M[1] === "@" ? Ot : j }), s.removeAttribute(l);
-        } else l.startsWith(f) && (a.push({ type: 6, index: r }), s.removeAttribute(l));
-        if (lt.test(s.tagName)) {
-          const l = s.textContent.split(f), u = l.length - 1;
+        if (s.hasAttributes()) for (const d of s.getAttributeNames()) if (d.endsWith(dt)) {
+          const u = h[a++], f = s.getAttribute(d).split($), P = /([.?@])?(.*)/.exec(u);
+          o.push({ type: 1, index: r, name: P[2], strings: f, ctor: P[1] === "." ? Nt : P[1] === "?" ? zt : P[1] === "@" ? Pt : H }), s.removeAttribute(d);
+        } else d.startsWith($) && (o.push({ type: 6, index: r }), s.removeAttribute(d));
+        if (pt.test(s.tagName)) {
+          const d = s.textContent.split($), u = d.length - 1;
           if (u > 0) {
-            s.textContent = N ? N.emptyScript : "";
-            for (let $ = 0; $ < u; $++) s.append(l[$], C()), b.nextNode(), a.push({ type: 2, index: ++r });
-            s.append(l[u], C());
+            s.textContent = U ? U.emptyScript : "";
+            for (let f = 0; f < u; f++) s.append(d[f], C()), b.nextNode(), o.push({ type: 2, index: ++r });
+            s.append(d[u], C());
           }
         }
-      } else if (s.nodeType === 8) if (s.data === at) a.push({ type: 2, index: r });
+      } else if (s.nodeType === 8) if (s.data === ct) o.push({ type: 2, index: r });
       else {
-        let l = -1;
-        for (; (l = s.data.indexOf(f, l + 1)) !== -1; ) a.push({ type: 7, index: r }), l += f.length - 1;
+        let d = -1;
+        for (; (d = s.data.indexOf($, d + 1)) !== -1; ) o.push({ type: 7, index: r }), d += $.length - 1;
       }
       r++;
     }
@@ -303,13 +303,13 @@ class k {
     return i.innerHTML = t, i;
   }
 }
-function E(n, t, e = n, i) {
-  if (t === w) return t;
+function x(n, t, e = n, i) {
+  if (t === A) return t;
   let s = i !== void 0 ? e._$Co?.[i] : e._$Cl;
-  const r = O(t) ? void 0 : t._$litDirective$;
-  return s?.constructor !== r && (s?._$AO?.(!1), r === void 0 ? s = void 0 : (s = new r(n), s._$AT(n, e, i)), i !== void 0 ? (e._$Co ??= [])[i] = s : e._$Cl = s), s !== void 0 && (t = E(n, s._$AS(n, t.values), s, i)), t;
+  const r = k(t) ? void 0 : t._$litDirective$;
+  return s?.constructor !== r && (s?._$AO?.(!1), r === void 0 ? s = void 0 : (s = new r(n), s._$AT(n, e, i)), i !== void 0 ? (e._$Co ??= [])[i] = s : e._$Cl = s), s !== void 0 && (t = x(n, s._$AS(n, t.values), s, i)), t;
 }
-class xt {
+class kt {
   constructor(t, e) {
     this._$AV = [], this._$AN = void 0, this._$AD = t, this._$AM = e;
   }
@@ -322,13 +322,13 @@ class xt {
   u(t) {
     const { el: { content: e }, parts: i } = this._$AD, s = (t?.creationScope ?? y).importNode(e, !0);
     b.currentNode = s;
-    let r = b.nextNode(), o = 0, h = 0, a = i[0];
-    for (; a !== void 0; ) {
-      if (o === a.index) {
-        let d;
-        a.type === 2 ? d = new P(r, r.nextSibling, this, t) : a.type === 1 ? d = new a.ctor(r, a.name, a.strings, this, t) : a.type === 6 && (d = new kt(r, this, t)), this._$AV.push(d), a = i[++h];
+    let r = b.nextNode(), a = 0, l = 0, o = i[0];
+    for (; o !== void 0; ) {
+      if (a === o.index) {
+        let c;
+        o.type === 2 ? c = new z(r, r.nextSibling, this, t) : o.type === 1 ? c = new o.ctor(r, o.name, o.strings, this, t) : o.type === 6 && (c = new Tt(r, this, t)), this._$AV.push(c), o = i[++l];
       }
-      o !== a?.index && (r = b.nextNode(), o++);
+      a !== o?.index && (r = b.nextNode(), a++);
     }
     return b.currentNode = y, s;
   }
@@ -337,12 +337,12 @@ class xt {
     for (const i of this._$AV) i !== void 0 && (i.strings !== void 0 ? (i._$AI(t, i, e), e += i.strings.length - 2) : i._$AI(t[e])), e++;
   }
 }
-class P {
+class z {
   get _$AU() {
     return this._$AM?._$AU ?? this._$Cv;
   }
   constructor(t, e, i, s) {
-    this.type = 2, this._$AH = c, this._$AN = void 0, this._$AA = t, this._$AB = e, this._$AM = i, this.options = s, this._$Cv = s?.isConnected ?? !0;
+    this.type = 2, this._$AH = p, this._$AN = void 0, this._$AA = t, this._$AB = e, this._$AM = i, this.options = s, this._$Cv = s?.isConnected ?? !0;
   }
   get parentNode() {
     let t = this._$AA.parentNode;
@@ -356,7 +356,7 @@ class P {
     return this._$AB;
   }
   _$AI(t, e = this) {
-    t = E(this, t, e), O(t) ? t === c || t == null || t === "" ? (this._$AH !== c && this._$AR(), this._$AH = c) : t !== this._$AH && t !== w && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : At(t) ? this.k(t) : this._(t);
+    t = x(this, t, e), k(t) ? t === p || t == null || t === "" ? (this._$AH !== p && this._$AR(), this._$AH = p) : t !== this._$AH && t !== A && this._(t) : t._$litType$ !== void 0 ? this.$(t) : t.nodeType !== void 0 ? this.T(t) : St(t) ? this.k(t) : this._(t);
   }
   O(t) {
     return this._$AA.parentNode.insertBefore(t, this._$AB);
@@ -365,38 +365,38 @@ class P {
     this._$AH !== t && (this._$AR(), this._$AH = this.O(t));
   }
   _(t) {
-    this._$AH !== c && O(this._$AH) ? this._$AA.nextSibling.data = t : this.T(y.createTextNode(t)), this._$AH = t;
+    this._$AH !== p && k(this._$AH) ? this._$AA.nextSibling.data = t : this.T(y.createTextNode(t)), this._$AH = t;
   }
   $(t) {
-    const { values: e, _$litType$: i } = t, s = typeof i == "number" ? this._$AC(t) : (i.el === void 0 && (i.el = k.createElement(ht(i.h, i.h[0]), this.options)), i);
+    const { values: e, _$litType$: i } = t, s = typeof i == "number" ? this._$AC(t) : (i.el === void 0 && (i.el = N.createElement(gt(i.h, i.h[0]), this.options)), i);
     if (this._$AH?._$AD === s) this._$AH.p(e);
     else {
-      const r = new xt(s, this), o = r.u(this.options);
-      r.p(e), this.T(o), this._$AH = r;
+      const r = new kt(s, this), a = r.u(this.options);
+      r.p(e), this.T(a), this._$AH = r;
     }
   }
   _$AC(t) {
-    let e = et.get(t.strings);
-    return e === void 0 && et.set(t.strings, e = new k(t)), e;
+    let e = st.get(t.strings);
+    return e === void 0 && st.set(t.strings, e = new N(t)), e;
   }
   k(t) {
-    F(this._$AH) || (this._$AH = [], this._$AR());
+    G(this._$AH) || (this._$AH = [], this._$AR());
     const e = this._$AH;
     let i, s = 0;
-    for (const r of t) s === e.length ? e.push(i = new P(this.O(C()), this.O(C()), this, this.options)) : i = e[s], i._$AI(r), s++;
+    for (const r of t) s === e.length ? e.push(i = new z(this.O(C()), this.O(C()), this, this.options)) : i = e[s], i._$AI(r), s++;
     s < e.length && (this._$AR(i && i._$AB.nextSibling, s), e.length = s);
   }
   _$AR(t = this._$AA.nextSibling, e) {
     for (this._$AP?.(!1, !0, e); t !== this._$AB; ) {
-      const i = Y(t).nextSibling;
-      Y(t).remove(), t = i;
+      const i = K(t).nextSibling;
+      K(t).remove(), t = i;
     }
   }
   setConnected(t) {
     this._$AM === void 0 && (this._$Cv = t, this._$AP?.(t));
   }
 }
-class j {
+class H {
   get tagName() {
     return this.element.tagName;
   }
@@ -404,53 +404,53 @@ class j {
     return this._$AM._$AU;
   }
   constructor(t, e, i, s, r) {
-    this.type = 1, this._$AH = c, this._$AN = void 0, this.element = t, this.name = e, this._$AM = s, this.options = r, i.length > 2 || i[0] !== "" || i[1] !== "" ? (this._$AH = Array(i.length - 1).fill(new String()), this.strings = i) : this._$AH = c;
+    this.type = 1, this._$AH = p, this._$AN = void 0, this.element = t, this.name = e, this._$AM = s, this.options = r, i.length > 2 || i[0] !== "" || i[1] !== "" ? (this._$AH = Array(i.length - 1).fill(new String()), this.strings = i) : this._$AH = p;
   }
   _$AI(t, e = this, i, s) {
     const r = this.strings;
-    let o = !1;
-    if (r === void 0) t = E(this, t, e, 0), o = !O(t) || t !== this._$AH && t !== w, o && (this._$AH = t);
+    let a = !1;
+    if (r === void 0) t = x(this, t, e, 0), a = !k(t) || t !== this._$AH && t !== A, a && (this._$AH = t);
     else {
-      const h = t;
-      let a, d;
-      for (t = r[0], a = 0; a < r.length - 1; a++) d = E(this, h[i + a], e, a), d === w && (d = this._$AH[a]), o ||= !O(d) || d !== this._$AH[a], d === c ? t = c : t !== c && (t += (d ?? "") + r[a + 1]), this._$AH[a] = d;
+      const l = t;
+      let o, c;
+      for (t = r[0], o = 0; o < r.length - 1; o++) c = x(this, l[i + o], e, o), c === A && (c = this._$AH[o]), a ||= !k(c) || c !== this._$AH[o], c === p ? t = p : t !== p && (t += (c ?? "") + r[o + 1]), this._$AH[o] = c;
     }
-    o && !s && this.j(t);
+    a && !s && this.j(t);
   }
   j(t) {
-    t === c ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
+    t === p ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, t ?? "");
   }
 }
-class St extends j {
+class Nt extends H {
   constructor() {
     super(...arguments), this.type = 3;
   }
   j(t) {
-    this.element[this.name] = t === c ? void 0 : t;
+    this.element[this.name] = t === p ? void 0 : t;
   }
 }
-class Ct extends j {
+class zt extends H {
   constructor() {
     super(...arguments), this.type = 4;
   }
   j(t) {
-    this.element.toggleAttribute(this.name, !!t && t !== c);
+    this.element.toggleAttribute(this.name, !!t && t !== p);
   }
 }
-class Ot extends j {
+class Pt extends H {
   constructor(t, e, i, s, r) {
     super(t, e, i, s, r), this.type = 5;
   }
   _$AI(t, e = this) {
-    if ((t = E(this, t, e, 0) ?? c) === w) return;
-    const i = this._$AH, s = t === c && i !== c || t.capture !== i.capture || t.once !== i.once || t.passive !== i.passive, r = t !== c && (i === c || s);
+    if ((t = x(this, t, e, 0) ?? p) === A) return;
+    const i = this._$AH, s = t === p && i !== p || t.capture !== i.capture || t.once !== i.once || t.passive !== i.passive, r = t !== p && (i === p || s);
     s && this.element.removeEventListener(this.name, this, i), r && this.element.addEventListener(this.name, this, t), this._$AH = t;
   }
   handleEvent(t) {
     typeof this._$AH == "function" ? this._$AH.call(this.options?.host ?? this.element, t) : this._$AH.handleEvent(t);
   }
 }
-class kt {
+class Tt {
   constructor(t, e, i) {
     this.element = t, this.type = 6, this._$AN = void 0, this._$AM = e, this.options = i;
   }
@@ -458,22 +458,22 @@ class kt {
     return this._$AM._$AU;
   }
   _$AI(t) {
-    E(this, t);
+    x(this, t);
   }
 }
-const Pt = B.litHtmlPolyfillSupport;
-Pt?.(k, P), (B.litHtmlVersions ??= []).push("3.3.3");
-const Mt = (n, t, e) => {
+const Mt = F.litHtmlPolyfillSupport;
+Mt?.(N, z), (F.litHtmlVersions ??= []).push("3.3.3");
+const jt = (n, t, e) => {
   const i = e?.renderBefore ?? t;
   let s = i._$litPart$;
   if (s === void 0) {
     const r = e?.renderBefore ?? null;
-    i._$litPart$ = s = new P(t.insertBefore(C(), r), r, void 0, e ?? {});
+    i._$litPart$ = s = new z(t.insertBefore(C(), r), r, void 0, e ?? {});
   }
   return s._$AI(n), s;
 };
-const G = globalThis;
-class A extends v {
+const V = globalThis;
+class w extends v {
   constructor() {
     super(...arguments), this.renderOptions = { host: this }, this._$Do = void 0;
   }
@@ -483,7 +483,7 @@ class A extends v {
   }
   update(t) {
     const e = this.render();
-    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(t), this._$Do = Mt(e, this.renderRoot, this.renderOptions);
+    this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(t), this._$Do = jt(e, this.renderRoot, this.renderOptions);
   }
   connectedCallback() {
     super.connectedCallback(), this._$Do?.setConnected(!0);
@@ -492,39 +492,61 @@ class A extends v {
     super.disconnectedCallback(), this._$Do?.setConnected(!1);
   }
   render() {
-    return w;
+    return A;
   }
 }
-A._$litElement$ = !0, A.finalized = !0, G.litElementHydrateSupport?.({ LitElement: A });
-const zt = G.litElementPolyfillSupport;
-zt?.({ LitElement: A });
-(G.litElementVersions ??= []).push("4.2.2");
-const R = Object.freeze({
+w._$litElement$ = !0, w.finalized = !0, V.litElementHydrateSupport?.({ LitElement: w });
+const Ut = V.litElementPolyfillSupport;
+Ut?.({ LitElement: w });
+(V.litElementVersions ??= []).push("4.2.2");
+const I = Object.freeze({
   type: "custom:ha-floorplan-card",
   grid: { width: 20, height: 15, tile_size: 16, background: "" },
   show_grid: !1,
+  assets: [],
   objects: []
 }), m = (n, t) => {
   const e = Number(n);
   return Number.isFinite(e) ? e : t;
 };
-function U(n = {}) {
+function E(n = {}) {
   const t = n.grid || {};
   return {
     ...n,
     type: "custom:ha-floorplan-card",
     grid: {
       ...t,
-      width: Math.max(1, m(t.width, R.grid.width)),
-      height: Math.max(1, m(t.height, R.grid.height)),
-      tile_size: Math.max(1, m(t.tile_size, R.grid.tile_size)),
+      width: Math.max(1, m(t.width, I.grid.width)),
+      height: Math.max(1, m(t.height, I.grid.height)),
+      tile_size: Math.max(1, m(t.tile_size, I.grid.tile_size)),
       background: t.background || ""
     },
     show_grid: !!n.show_grid,
-    objects: Array.isArray(n.objects) ? n.objects.map((e, i) => Nt(e, i)) : []
+    assets: Array.isArray(n.assets) ? n.assets.map((e, i) => Rt(e, i)) : [],
+    objects: Array.isArray(n.objects) ? n.objects.map((e, i) => Ht(e, i)) : []
   };
 }
-function Nt(n = {}, t = 0) {
+function Rt(n = {}, t = 0) {
+  return {
+    ...n,
+    id: n.id || `asset-${t + 1}`,
+    name: n.name || n.id || `Asset ${t + 1}`,
+    width: Math.max(0.25, m(n.width, 1)),
+    height: Math.max(0.25, m(n.height, 1)),
+    images: { ...n.images || {} }
+  };
+}
+function j(n, t = []) {
+  const e = t.find((i) => i.id === n.asset_id);
+  return e ? {
+    ...e,
+    ...n,
+    images: { ...e.images, ...n.images },
+    width: n.width ?? e.width,
+    height: n.height ?? e.height
+  } : n;
+}
+function Ht(n = {}, t = 0) {
   return {
     ...n,
     id: n.id || `object-${t + 1}`,
@@ -532,12 +554,12 @@ function Nt(n = {}, t = 0) {
     x: m(n.x, 0),
     y: m(n.y, 0),
     z: m(n.z, 0),
-    width: Math.max(0.25, m(n.width, 1)),
-    height: Math.max(0.25, m(n.height, 1)),
+    width: n.width === void 0 && n.asset_id ? void 0 : Math.max(0.25, m(n.width, 1)),
+    height: n.height === void 0 && n.asset_id ? void 0 : Math.max(0.25, m(n.height, 1)),
     images: { ...n.images || {} }
   };
 }
-function ct(n, t) {
+function ut(n, t) {
   let e = n.images?.default || "";
   if (n.entity_id) {
     const i = t?.states?.[n.entity_id]?.state;
@@ -547,27 +569,27 @@ function ct(n, t) {
     t?.states?.[i?.if?.entity_id]?.state === i?.if?.state && (e = i.image || e);
   return e;
 }
-function it(n, t = "tap") {
+function nt(n, t = "tap") {
   const e = n[`${t}_action`];
   return e || (t === "tap" && n.entity_id ? { action: "toggle" } : { action: "none" });
 }
-function Ut(n, t) {
+function Lt(n, t) {
   return {
     ...n,
     x: Math.max(0, Math.min(n.x, t.width - n.width)),
     y: Math.max(0, Math.min(n.y, t.height - n.height))
   };
 }
-function Tt(n, t, e, i) {
+function It(n, t, e, i) {
   const s = i?.action || "none", r = i?.entity || e.entity_id;
   if (s === "toggle" && r) {
-    const o = r.split(".")[0];
-    t.callService(o, "toggle", { entity_id: r });
+    const a = r.split(".")[0];
+    t.callService(a, "toggle", { entity_id: r });
     return;
   }
   if (s === "call-service" && i.service) {
-    const [o, h] = i.service.split(".");
-    t.callService(o, h, {
+    const [a, l] = i.service.split(".");
+    t.callService(a, l, {
       ...i.service_data || i.data || {},
       ...r ? { entity_id: r } : {}
     });
@@ -587,12 +609,12 @@ function Tt(n, t, e, i) {
   }
   s === "url" && i.url_path && window.open(i.url_path, i.new_tab === !1 ? "_self" : "_blank");
 }
-class jt extends A {
+class Dt extends w {
   static properties = {
     hass: { attribute: !1 },
     config: { state: !0 }
   };
-  static styles = nt`
+  static styles = lt`
     :host { display: block; }
     ha-card { overflow: hidden; }
     .floorplan {
@@ -626,23 +648,24 @@ class jt extends A {
   `;
   setConfig(t) {
     if (!t?.grid) throw new Error("You need to define a grid with width and height");
-    this.config = U(t);
+    this.config = E(t);
   }
   static getConfigElement() {
     return document.createElement("ha-floorplan-card-editor");
   }
   static getStubConfig() {
-    return structuredClone(U());
+    return structuredClone(E());
   }
   getCardSize() {
     return Math.max(1, Math.ceil((this.config?.grid?.height || 5) / 3));
   }
   _runAction(t) {
-    Tt(this, this.hass, t, it(t));
+    It(this, this.hass, t, nt(t));
   }
   _objectTemplate(t) {
-    const e = this.config.grid, i = ct(t, this.hass);
-    if (!i) return c;
+    t = j(t, this.config.assets);
+    const e = this.config.grid, i = ut(t, this.hass);
+    if (!i) return p;
     const s = [
       `left:${t.x / e.width * 100}%`,
       `top:${t.y / e.height * 100}%`,
@@ -651,12 +674,12 @@ class jt extends A {
       `z-index:${t.z}`,
       `background-image:url(${JSON.stringify(i)})`
     ].join(";");
-    return it(t).action !== "none" ? g`<button class="object" style=${s} title=${t.name || t.id}
+    return nt(t).action !== "none" ? g`<button class="object" style=${s} title=${t.name || t.id}
           aria-label=${t.name || t.id} @click=${() => this._runAction(t)}></button>` : g`<div class="object" style=${s} title=${t.name || t.id}></div>`;
   }
   render() {
-    if (!this.config || !this.hass) return c;
-    const { grid: t } = this.config, e = [...this.config.objects].sort((r, o) => r.z - o.z), i = [
+    if (!this.config || !this.hass) return p;
+    const { grid: t } = this.config, e = [...this.config.objects].sort((r, a) => r.z - a.z), i = [
       `aspect-ratio:${t.width}/${t.height}`,
       t.background ? `background-image:url(${JSON.stringify(t.background)})` : ""
     ].join(";"), s = [
@@ -666,18 +689,125 @@ class jt extends A {
     return g`<ha-card>
       <div class="floorplan" style=${i}>
         ${e.map((r) => this._objectTemplate(r))}
-        ${this.config.show_grid ? g`<div class="grid-lines" style=${s}></div>` : c}
+        ${this.config.show_grid ? g`<div class="grid-lines" style=${s}></div>` : p}
       </div>
     </ha-card>`;
   }
 }
-class Ht extends A {
+const rt = (n = []) => Object.fromEntries(
+  n.map(({ name: t, value: e }) => [t, e])
+), at = (n) => Object.entries(n).filter(([, t]) => t != null && t !== "").map(([t, e]) => ({
+  name: t,
+  type: typeof e == "number" ? "float" : typeof e == "boolean" ? "bool" : "string",
+  value: typeof e == "object" ? JSON.stringify(e) : e
+})), T = (n, t) => {
+  if (typeof n != "string") return n ?? t;
+  try {
+    return JSON.parse(n);
+  } catch {
+    return t;
+  }
+};
+function Bt(n) {
+  const t = E(n), { grid: e } = t;
+  return {
+    type: "map",
+    version: "1.10",
+    tiledversion: "1.11.2",
+    orientation: "orthogonal",
+    renderorder: "right-down",
+    width: e.width,
+    height: e.height,
+    tilewidth: e.tile_size,
+    tileheight: e.tile_size,
+    infinite: !1,
+    nextlayerid: 3,
+    nextobjectid: t.objects.length + 1,
+    properties: at({
+      ha_card_type: t.type,
+      background: e.background,
+      assets: t.assets
+    }),
+    layers: [
+      ...e.background ? [{
+        id: 1,
+        name: "Background",
+        type: "imagelayer",
+        image: e.background,
+        x: 0,
+        y: 0,
+        visible: !0,
+        opacity: 1
+      }] : [],
+      {
+        id: 2,
+        name: "Home Assistant Objects",
+        type: "objectgroup",
+        draworder: "index",
+        visible: !0,
+        opacity: 1,
+        objects: t.objects.map((i, s) => ({
+          id: s + 1,
+          name: i.id,
+          class: i.type === "entity" ? "ha-entity" : "virtual",
+          x: i.x * e.tile_size,
+          y: i.y * e.tile_size,
+          width: i.width * e.tile_size,
+          height: i.height * e.tile_size,
+          visible: i.visible !== !1,
+          properties: at({
+            entity_id: i.entity_id,
+            asset_id: i.asset_id,
+            z: i.z,
+            images: i.images,
+            conditions: i.conditions,
+            tap_action: i.tap_action
+          })
+        }))
+      }
+    ]
+  };
+}
+function Jt(n, t = {}) {
+  if (!n || n.type !== "map") throw new Error("The selected file is not a Tiled JSON map");
+  const e = rt(n.properties), i = Number(n.tilewidth || n.tileheight || t.grid?.tile_size || 16), s = (n.layers || []).find((l) => l.type === "imagelayer"), a = (n.layers || []).filter((l) => l.type === "objectgroup").flatMap((l) => (l.objects || []).map((o, c) => {
+    const h = rt(o.properties);
+    return {
+      id: o.name || `object-${c + 1}`,
+      type: o.class === "ha-entity" || h.entity_id ? "entity" : "virtual",
+      entity_id: h.entity_id || "",
+      asset_id: h.asset_id || "",
+      x: Number(o.x || 0) / i,
+      y: Number(o.y || 0) / i,
+      z: Number(h.z ?? c),
+      width: Number(o.width || i) / i,
+      height: Number(o.height || i) / i,
+      visible: o.visible !== !1,
+      images: T(h.images, {}),
+      conditions: T(h.conditions, void 0),
+      tap_action: T(h.tap_action, void 0)
+    };
+  }));
+  return E({
+    ...t,
+    grid: {
+      ...t.grid,
+      width: Number(n.width || t.grid?.width || 20),
+      height: Number(n.height || t.grid?.height || 15),
+      tile_size: i,
+      background: e.background || s?.image || t.grid?.background || ""
+    },
+    assets: T(e.assets, t.assets || []),
+    objects: a
+  });
+}
+class Ft extends w {
   static properties = {
     hass: { attribute: !1 },
     config: { state: !0 },
     _selected: { state: !0 }
   };
-  static styles = nt`
+  static styles = lt`
     :host { display: block; }
     .editor { display: grid; gap: 16px; padding: 8px 0; }
     .settings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -701,6 +831,10 @@ class Ht extends A {
     .toolbar, .row { display: flex; gap: 8px; align-items: center; }
     .toolbar { justify-content: space-between; }
     .objects { display: grid; gap: 10px; }
+    .asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+    .asset { display: grid; gap: 6px; padding: 8px; border: 1px solid var(--divider-color); border-radius: 8px; }
+    .asset img { width: 100%; height: 64px; object-fit: contain; image-rendering: pixelated; background: var(--secondary-background-color); }
+    .asset button { width: 100%; }
     details { border: 1px solid var(--divider-color); border-radius: 8px; padding: 8px; }
     summary { cursor: pointer; }
     .object-fields { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
@@ -716,10 +850,10 @@ class Ht extends A {
     }
   `;
   setConfig(t) {
-    this.config = U(t), this._selected >= this.config.objects.length && (this._selected = void 0);
+    this.config = E(t), this._selected >= this.config.objects.length && (this._selected = void 0);
   }
   _emit(t = this.config) {
-    this.config = U(t), this.dispatchEvent(new CustomEvent("config-changed", {
+    this.config = E(t), this.dispatchEvent(new CustomEvent("config-changed", {
       bubbles: !0,
       composed: !0,
       detail: { config: structuredClone(this.config) }
@@ -754,23 +888,70 @@ class Ht extends A {
       }]
     }), this._selected = t;
   }
+  _addAsset() {
+    const t = this.config.assets.length;
+    this._emit({ ...this.config, assets: [...this.config.assets, {
+      id: `asset-${t + 1}`,
+      name: `Asset ${t + 1}`,
+      width: 1,
+      height: 1,
+      images: { default: "" }
+    }] });
+  }
+  _updateAsset(t, e) {
+    const i = this.config.assets[t].id, s = this.config.assets.map((a, l) => l === t ? { ...a, ...e } : a), r = e.id && e.id !== i ? this.config.objects.map((a) => a.asset_id === i ? { ...a, asset_id: e.id } : a) : this.config.objects;
+    this._emit({ ...this.config, assets: s, objects: r });
+  }
+  _removeAsset(t) {
+    this._emit({ ...this.config, assets: this.config.assets.filter((e, i) => i !== t) });
+  }
+  _placeAsset(t) {
+    const e = this.config.objects.length;
+    this._emit({ ...this.config, objects: [...this.config.objects, {
+      id: `${t.id}-${e + 1}`,
+      type: "virtual",
+      asset_id: t.id,
+      x: 0,
+      y: 0,
+      z: e,
+      width: t.width,
+      height: t.height,
+      images: {}
+    }] }), this._selected = e;
+  }
+  _downloadTiled() {
+    const t = new Blob([JSON.stringify(Bt(this.config), null, 2)], { type: "application/json" }), e = URL.createObjectURL(t), i = document.createElement("a");
+    i.href = e, i.download = "home-floorplan.tmj", i.click(), URL.revokeObjectURL(e);
+  }
+  async _importTiled(t) {
+    const e = t.target.files?.[0];
+    if (e)
+      try {
+        this._emit(Jt(JSON.parse(await e.text()), this.config)), this._selected = void 0;
+      } catch (i) {
+        alert(`Unable to import Tiled map: ${i.message}`);
+      } finally {
+        t.target.value = "";
+      }
+  }
   _removeObject(t) {
     this._emit({ ...this.config, objects: this.config.objects.filter((e, i) => i !== t) }), this._selected = void 0;
   }
   _dragStart(t, e) {
     t.preventDefault(), this._selected = e;
-    const i = this.renderRoot.querySelector(".stage"), s = this.config.objects[e], r = i.getBoundingClientRect(), o = { x: t.clientX, y: t.clientY, object: s, rect: r };
+    const i = this.renderRoot.querySelector(".stage"), s = j(this.config.objects[e], this.config.assets), r = i.getBoundingClientRect(), a = { x: t.clientX, y: t.clientY, object: s, rect: r };
     t.currentTarget.setPointerCapture(t.pointerId);
-    const h = (d) => {
-      const p = (d.clientX - o.x) / o.rect.width * this.config.grid.width, l = (d.clientY - o.y) / o.rect.height * this.config.grid.height, u = Ut({ ...o.object, x: Math.round(o.object.x + p), y: Math.round(o.object.y + l) }, this.config.grid);
+    const l = (c) => {
+      const h = (c.clientX - a.x) / a.rect.width * this.config.grid.width, d = (c.clientY - a.y) / a.rect.height * this.config.grid.height, u = Lt({ ...a.object, x: Math.round(a.object.x + h), y: Math.round(a.object.y + d) }, this.config.grid);
       this._updateObject(e, { x: u.x, y: u.y });
-    }, a = () => {
-      window.removeEventListener("pointermove", h), window.removeEventListener("pointerup", a);
+    }, o = () => {
+      window.removeEventListener("pointermove", l), window.removeEventListener("pointerup", o);
     };
-    window.addEventListener("pointermove", h), window.addEventListener("pointerup", a, { once: !0 });
+    window.addEventListener("pointermove", l), window.addEventListener("pointerup", o, { once: !0 });
   }
   _stageObject(t, e) {
-    const { grid: i } = this.config, s = ct(t, this.hass), r = [
+    t = j(t, this.config.assets);
+    const { grid: i } = this.config, s = ut(t, this.hass), r = [
       `left:${t.x / i.width * 100}%`,
       `top:${t.y / i.height * 100}%`,
       `width:${t.width / i.width * 100}%`,
@@ -779,33 +960,36 @@ class Ht extends A {
       s ? `background-image:url(${JSON.stringify(s)})` : ""
     ].join(";");
     return g`<button class="sprite ${this._selected === e ? "selected" : ""}"
-      style=${r} title=${t.id} @pointerdown=${(o) => this._dragStart(o, e)}></button>`;
+      style=${r} title=${t.id} @pointerdown=${(a) => this._dragStart(a, e)}></button>`;
   }
   _objectForm(t, e) {
-    const i = t.tap_action?.action || (t.entity_id ? "toggle" : "none");
-    return g`<details ?open=${this._selected === e} @toggle=${(s) => {
-      s.currentTarget.open && (this._selected = e);
+    const i = j(t, this.config.assets), s = t.tap_action?.action || (t.entity_id ? "toggle" : "none");
+    return g`<details ?open=${this._selected === e} @toggle=${(r) => {
+      r.currentTarget.open && (this._selected = e);
     }}>
       <summary>${t.id} — (${t.x}, ${t.y})</summary>
       <div class="object-fields">
-        <label class="span-2">ID<input .value=${t.id} @change=${(s) => this._updateObject(e, { id: s.target.value })}></label>
-        <label class="span-2">Entity ID<input .value=${t.entity_id || ""} @change=${(s) => this._updateObject(e, { entity_id: s.target.value })}></label>
-        ${["x", "y", "z", "width", "height"].map((s) => g`<label>${s}<input type="number" step=${s === "width" || s === "height" ? ".25" : "1"}
-          .value=${String(t[s])} @change=${(r) => this._updateObject(e, { [s]: Number(r.target.value) })}></label>`)}
-        <label class="span-2">Default image<input .value=${t.images?.default || ""} @change=${(s) => this._updateImage(e, "default", s.target.value)}></label>
-        <label>On image<input .value=${t.images?.on || ""} @change=${(s) => this._updateImage(e, "on", s.target.value)}></label>
-        <label>Off image<input .value=${t.images?.off || ""} @change=${(s) => this._updateImage(e, "off", s.target.value)}></label>
-        <label class="span-2">Tap action<select .value=${i} @change=${(s) => this._updateObject(e, { tap_action: { ...t.tap_action, action: s.target.value } })}>
-          ${["none", "toggle", "more-info", "call-service", "navigate", "url"].map((s) => g`<option value=${s}>${s}</option>`)}
+        <label class="span-2">ID<input .value=${t.id} @change=${(r) => this._updateObject(e, { id: r.target.value })}></label>
+        <label class="span-2">Entity ID<input .value=${t.entity_id || ""} @change=${(r) => this._updateObject(e, { entity_id: r.target.value })}></label>
+        ${["x", "y", "z", "width", "height"].map((r) => g`<label>${r}<input type="number" step=${r === "width" || r === "height" ? ".25" : "1"}
+          .value=${String(i[r] ?? "")} @change=${(a) => this._updateObject(e, { [r]: Number(a.target.value) })}></label>`)}
+        <label class="span-2">Asset<select .value=${t.asset_id || ""} @change=${(r) => this._updateObject(e, { asset_id: r.target.value })}>
+          <option value="">None</option>${this.config.assets.map((r) => g`<option value=${r.id}>${r.name}</option>`)}
         </select></label>
-        ${i === "call-service" ? g`<label class="span-2">Service<input placeholder="light.turn_on" .value=${t.tap_action?.service || ""} @change=${(s) => this._updateObject(e, { tap_action: { ...t.tap_action, service: s.target.value } })}></label>` : c}
-        ${i === "navigate" ? g`<label class="span-2">Navigation path<input .value=${t.tap_action?.navigation_path || ""} @change=${(s) => this._updateObject(e, { tap_action: { ...t.tap_action, navigation_path: s.target.value } })}></label>` : c}
+        <label class="span-2">Default image<input .value=${t.images?.default || ""} @change=${(r) => this._updateImage(e, "default", r.target.value)}></label>
+        <label>On image<input .value=${t.images?.on || ""} @change=${(r) => this._updateImage(e, "on", r.target.value)}></label>
+        <label>Off image<input .value=${t.images?.off || ""} @change=${(r) => this._updateImage(e, "off", r.target.value)}></label>
+        <label class="span-2">Tap action<select .value=${s} @change=${(r) => this._updateObject(e, { tap_action: { ...t.tap_action, action: r.target.value } })}>
+          ${["none", "toggle", "more-info", "call-service", "navigate", "url"].map((r) => g`<option value=${r}>${r}</option>`)}
+        </select></label>
+        ${s === "call-service" ? g`<label class="span-2">Service<input placeholder="light.turn_on" .value=${t.tap_action?.service || ""} @change=${(r) => this._updateObject(e, { tap_action: { ...t.tap_action, service: r.target.value } })}></label>` : p}
+        ${s === "navigate" ? g`<label class="span-2">Navigation path<input .value=${t.tap_action?.navigation_path || ""} @change=${(r) => this._updateObject(e, { tap_action: { ...t.tap_action, navigation_path: r.target.value } })}></label>` : p}
         <button class="danger span-4" type="button" @click=${() => this._removeObject(e)}>Remove object</button>
       </div>
     </details>`;
   }
   render() {
-    if (!this.config) return c;
+    if (!this.config) return p;
     const { grid: t } = this.config, e = [
       `aspect-ratio:${t.width}/${t.height}`,
       t.background ? `background-image:url(${JSON.stringify(t.background)})` : ""
@@ -826,13 +1010,30 @@ class Ht extends A {
         ${this.config.objects.map((s, r) => this._stageObject(s, r))}
         <div class="grid" style=${i}></div>
       </div>
+      <div class="toolbar"><strong>Asset library (${this.config.assets.length})</strong><button type="button" @click=${this._addAsset}>Add asset</button></div>
+      <div class="asset-grid">${this.config.assets.map((s, r) => g`
+        <div class="asset">
+          ${s.images?.default ? g`<img src=${s.images.default} alt=${s.name}>` : g`<div class="hint">No image</div>`}
+          <input aria-label="Asset ID" .value=${s.id} @change=${(a) => this._updateAsset(r, { id: a.target.value })}>
+          <input aria-label="Asset name" .value=${s.name} @change=${(a) => this._updateAsset(r, { name: a.target.value })}>
+          <input aria-label="Asset image" placeholder="Image URL" .value=${s.images?.default || ""} @change=${(a) => this._updateAsset(r, { images: { ...s.images, default: a.target.value } })}>
+          <div class="row"><input aria-label="Asset width" type="number" min=".25" step=".25" .value=${String(s.width)} @change=${(a) => this._updateAsset(r, { width: Number(a.target.value) })}>
+          <input aria-label="Asset height" type="number" min=".25" step=".25" .value=${String(s.height)} @change=${(a) => this._updateAsset(r, { height: Number(a.target.value) })}></div>
+          <button type="button" @click=${() => this._placeAsset(s)}>Place</button>
+          <button class="danger" type="button" @click=${() => this._removeAsset(r)}>Remove</button>
+        </div>`)}
+      </div>
+      <div class="toolbar"><strong>Tiled</strong><div class="row">
+        <label><span class="hint">Import .tmj</span><input type="file" accept=".tmj,.json,application/json" @change=${this._importTiled}></label>
+        <button type="button" @click=${this._downloadTiled}>Export .tmj</button>
+      </div></div>
       <div class="toolbar"><strong>Objects (${this.config.objects.length})</strong><button type="button" @click=${this._addObject}>Add object</button></div>
       <div class="objects">${this.config.objects.map((s, r) => this._objectForm(s, r))}</div>
     </div>`;
   }
 }
-customElements.get("ha-floorplan-card-editor") || customElements.define("ha-floorplan-card-editor", Ht);
-customElements.get("ha-floorplan-card") || customElements.define("ha-floorplan-card", jt);
+customElements.get("ha-floorplan-card-editor") || customElements.define("ha-floorplan-card-editor", Ft);
+customElements.get("ha-floorplan-card") || customElements.define("ha-floorplan-card", Dt);
 window.customCards = window.customCards || [];
 window.customCards.some((n) => n.type === "ha-floorplan-card") || window.customCards.push({
   type: "ha-floorplan-card",

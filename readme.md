@@ -15,6 +15,8 @@ A Home Assistant Lovelace card for creating **RPG-style floor plans** with grid-
 - Drag-and-drop object positioning with grid snapping
 - Configurable Home Assistant tap actions
 - Safe, non-destructive editing that preserves conditions and custom fields
+- Reusable RPG asset library with state image overrides
+- Tiled `.tmj` import and export
 
 
 ## 📦 Installation via HACS
@@ -89,6 +91,46 @@ Supported tap actions:
 
 Existing configurations remain compatible. Unknown object fields and
 `conditions` are preserved when the visual editor changes another property.
+
+## 🧩 Reusable Assets
+
+Define furniture and device art once, then place it multiple times with
+`asset_id`. A placed object can override only the state images that differ.
+
+```yaml
+assets:
+  - id: floor-lamp
+    name: Floor Lamp
+    width: 1
+    height: 2
+    images:
+      default: /local/rpg/lamp-off.png
+      on: /local/rpg/lamp-on.png
+
+objects:
+  - id: living-room-lamp
+    type: entity
+    entity_id: light.living_room
+    asset_id: floor-lamp
+    x: 8
+    y: 5
+    z: 4
+```
+
+The editor asset library can add, preview, resize and place these reusable
+items. Asset IDs are updated safely across placed objects when renamed.
+
+## 🗺️ Tiled Interchange
+
+Use **Export .tmj** in the card editor to open the map in
+[Tiled](https://www.mapeditor.org/). Home Assistant metadata is stored as Tiled
+object properties, including `entity_id`, `asset_id`, `z`, state images,
+conditions and tap actions. Import the edited `.tmj` file to bring positions,
+dimensions and metadata back into the card.
+
+Tiled uses pixel coordinates while the card uses logical grid coordinates. The
+converter applies `tile_size` automatically, so a position at `(64, 96)` in a
+16-pixel Tiled map becomes `(4, 6)` in the card.
 
 ## 🛠️ Development
 
