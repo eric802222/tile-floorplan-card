@@ -61,3 +61,9 @@ the threshold without documenting why.
 Use `map:regress` in CI. It compares the complete scenario report, fails on missing
 baselines, lists stale baseline PNGs, and writes one aggregate JSON report. Upload
 `map-diffs/` and `map-regression.report.json` as CI artifacts when the job fails.
+
+Projects hosted on GitHub can use `.github/actions/map-visual-regression`. Provide the
+map, Home Assistant `www` root, scenario JSON and reviewed baseline directory. The
+action renders every scenario, enforces the regression threshold, and uploads the
+overview, per-scenario render reports, highlighted diffs and aggregate report even
+when validation fails. Never place provider credentials in this action.

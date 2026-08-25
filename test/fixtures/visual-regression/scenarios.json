@@ -1,0 +1,6 @@
+{
+  "scenarios": [
+    { "id": "lamp-off", "name": "Lamp off", "states": { "light.room": "off" } },
+    { "id": "lamp-on", "name": "Lamp on", "states": { "light.room": "on" } }
+  ]
+}

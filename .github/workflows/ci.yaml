@@ -23,3 +23,15 @@ jobs:
       - run: npm run build
       - name: Verify committed bundle
         run: git diff --exit-code -- tile-floorplan-card.js
+      - name: Verify map visual regression pipeline
+        uses: ./.github/actions/map-visual-regression
+        with:
+          map: test/fixtures/visual-regression/card.json
+          www-root: test/fixtures/visual-regression/www
+          scenarios: test/fixtures/visual-regression/scenarios.json
+          baseline-dir: test/fixtures/visual-regression/baselines
+          output-dir: test/fixtures/visual-regression/output
+          diff-dir: test/fixtures/visual-regression/diffs
+          report: test/fixtures/visual-regression/regression.report.json
+          scale: "1"
+          install-dependencies: "false"

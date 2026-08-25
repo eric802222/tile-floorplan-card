@@ -1,0 +1,99 @@
+name: Map visual regression
+description: Render Home Assistant map scenarios, compare reviewed baselines, and upload visual reports.
+inputs:
+  map:
+    description: Card JSON or Tiled TMJ file
+    required: true
+  www-root:
+    description: Home Assistant config/www directory used to resolve /local URLs
+    required: true
+  scenarios:
+    description: Scenario matrix JSON file
+    required: true
+  baseline-dir:
+    description: Directory containing reviewed scenario PNGs
+    required: true
+  output-dir:
+    description: Directory for rendered scenarios
+    default: map-scenarios
+  diff-dir:
+    description: Directory for highlighted PNG differences
+    default: map-diffs
+  report:
+    description: Aggregate regression JSON report path
+    default: map-regression.report.json
+  scale:
+    description: Nearest-neighbor render scale
+    default: "4"
+  threshold:
+    description: Maximum per-channel difference ignored for each pixel
+    default: "0"
+  max-ratio:
+    description: Maximum changed-pixel ratio accepted for each scenario
+    default: "0"
+  artifact-name:
+    description: GitHub Actions artifact name
+    default: map-visual-regression
+  install-dependencies:
+    description: Run npm ci for the action repository; disable only if already installed
+    default: "true"
+outputs:
+  report:
+    description: Aggregate regression JSON report path
+    value: ${{ inputs.report }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - id: paths
+      shell: bash
+      run: |
+        action_root="$(cd "$GITHUB_ACTION_PATH/../../.." && pwd)"
+        echo "action-root=$action_root" >> "$GITHUB_OUTPUT"
+    - name: Install renderer dependencies
+      if: inputs.install-dependencies == 'true'
+      shell: bash
+      run: npm ci --prefix "${{ steps.paths.outputs.action-root }}"
+    - id: render
+      name: Render Home Assistant scenarios
+      continue-on-error: true
+      shell: bash
+      run: |
+        node "${{ steps.paths.outputs.action-root }}/tools/render-scenarios.js" "${{ inputs.map }}" \
+          --www-root "${{ inputs.www-root }}" \
+          --scenarios "${{ inputs.scenarios }}" \
+          --output-dir "${{ inputs.output-dir }}" \
+          --scale "${{ inputs.scale }}"
+    - id: regress
+      name: Compare reviewed baselines
+      if: steps.render.outcome == 'success'
+      continue-on-error: true
+      shell: bash
+      run: |
+        node "${{ steps.paths.outputs.action-root }}/tools/regress-map.js" \
+          --scenarios-report "${{ inputs.output-dir }}/scenarios.report.json" \
+          --baseline-dir "${{ inputs.baseline-dir }}" \
+          --diff-dir "${{ inputs.diff-dir }}" \
+          --report "${{ inputs.report }}" \
+          --threshold "${{ inputs.threshold }}" \
+          --max-ratio "${{ inputs.max-ratio }}"
+    - name: Upload visual evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name }}
+        if-no-files-found: warn
+        path: |
+          ${{ inputs.output-dir }}/
+          ${{ inputs.diff-dir }}/
+          ${{ inputs.report }}
+    - name: Enforce visual result
+      if: always()
+      shell: bash
+      run: |
+        if [[ "${{ steps.render.outcome }}" != "success" || "${{ steps.regress.outcome }}" != "success" ]]; then
+          echo "Map visual regression failed; inspect the uploaded artifact."
+          exit 1
+        fi
