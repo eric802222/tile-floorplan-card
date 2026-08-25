@@ -1,6 +1,6 @@
 {
   "name": "tile-floorplan-card",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,7 +13,9 @@
     "assets:preview": "node tools/preview-assets.js",
     "assets:validate": "node tools/validate-assets.js",
     "map:validate": "node tools/validate-map.js",
-    "map:render": "node tools/render-map.js"
+    "map:render": "node tools/render-map.js",
+    "map:scenarios": "node tools/render-scenarios.js",
+    "map:diff": "node tools/compare-render.js"
   },
   "dependencies": {
     "lit": "^3.3.1",
