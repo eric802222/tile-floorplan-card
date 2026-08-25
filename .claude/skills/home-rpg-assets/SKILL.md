@@ -38,7 +38,9 @@ individual tiles, furniture or state variants would preserve editability.
    production assets.
 9. Add the assets to the card config and place them through the editor or Tiled.
 10. Run `npm run map:validate -- <card.json|map.tmj>` after placement.
-11. Run tests and build the HACS bundle after source changes.
+11. Render representative Home Assistant state profiles with `npm run map:render`
+    and inspect the complete map. Do not approve assets based only on the contact sheet.
+12. Run tests and build the HACS bundle after source changes.
 
 Read [references/manifest-schema.md](references/manifest-schema.md) when creating or
 debugging a manifest. Read the repository `CLAUDE.md` for commands and environment

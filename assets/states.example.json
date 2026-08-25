@@ -1,0 +1,5 @@
+{
+  "light.living_room": "on",
+  "switch.floor_fan": "off",
+  "input_boolean.night_mode": "off"
+}
