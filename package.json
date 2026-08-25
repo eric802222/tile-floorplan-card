@@ -1,8 +1,11 @@
 {
   "name": "tile-floorplan-card",
-  "version": "0.12.0",
+  "version": "0.15.0",
   "private": true,
   "type": "module",
+  "bin": {
+    "tile-floorplan": "bin/tile-floorplan.js"
+  },
   "scripts": {
     "build": "vite build",
     "dev": "vite",
@@ -16,7 +19,9 @@
     "map:render": "node tools/render-map.js",
     "map:scenarios": "node tools/render-scenarios.js",
     "map:diff": "node tools/compare-render.js",
-    "map:regress": "node tools/regress-map.js"
+    "map:regress": "node tools/regress-map.js",
+    "map:review": "node tools/review-map.js",
+    "floorplan": "node bin/tile-floorplan.js"
   },
   "dependencies": {
     "lit": "^3.3.1",

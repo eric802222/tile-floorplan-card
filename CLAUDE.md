@@ -5,6 +5,11 @@ generation is provider-agnostic and must use an OpenAI-compatible images schema.
 
 For asset or map artwork tasks, load `.claude/skills/home-rpg-assets/SKILL.md`.
 
+Use the deterministic `tile-floorplan` CLI through `npm run floorplan --`. It prints
+JSON to stdout and uses non-zero exit codes for failed validation. Object mutations
+are dry-run unless `--write` is explicitly present and successful writes create a
+sibling `.bak` file.
+
 ## Rules
 
 - Never put API keys or image-provider calls in the Home Assistant card bundle.
@@ -67,3 +72,36 @@ map, Home Assistant `www` root, scenario JSON and reviewed baseline directory. T
 action renders every scenario, enforces the regression threshold, and uploads the
 overview, per-scenario render reports, highlighted diffs and aggregate report even
 when validation fails. Never place provider credentials in this action.
+
+For the local workflow, run the complete review in one command:
+
+```bash
+npm run map:review -- card-config.json --www-root /config/www \
+  --scenarios assets/scenarios.json --output-dir map-review \
+  --baseline-dir baselines
+```
+
+Claude Code should use the unified equivalents for interactive work:
+
+```bash
+npm run floorplan -- inspect --map card-config.json
+npm run floorplan -- object move --map card-config.json \
+  --id living-room-lamp --x 12 --y 8
+# Review the JSON preview, then repeat with --write.
+npm run floorplan -- review --map card-config.json --www-root /config/www \
+  --scenarios assets/scenarios.json --baseline-dir baselines
+```
+
+Asset generation is also CLI-first. `asset plan` and `asset generate` without
+`--write` never call the provider. Only use `--write` after the user requested paid
+generation and the plan has been reviewed. Existing raw PNGs are skipped unless
+`--overwrite` is explicit.
+
+```bash
+npm run floorplan -- asset inspect --manifest assets/manifest.json
+npm run floorplan -- asset plan --manifest assets/manifest.json
+npm run floorplan -- asset generate --manifest assets/manifest.json --write
+npm run floorplan -- asset process --manifest assets/manifest.json
+npm run floorplan -- asset preview --manifest assets/manifest.json
+npm run floorplan -- asset validate --manifest assets/manifest.json --strict
+```

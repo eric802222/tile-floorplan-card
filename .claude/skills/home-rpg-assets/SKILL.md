@@ -25,21 +25,24 @@ individual tiles, furniture or state variants would preserve editability.
 1. Inspect the current map config, Tiled map and `assets/manifest.json` when present.
 2. Identify missing reusable assets and their meaningful Home Assistant states.
 3. Update the manifest with stable lowercase IDs, logical dimensions and concise prompts.
-4. Run `npm run assets:dry-run -- assets/manifest.json` and review every job.
+4. Run `npm run floorplan -- asset plan --manifest assets/manifest.json` and review
+   every OpenAI-compatible request.
 5. When generation is authorized and provider variables are configured, run
-   `npm run assets:generate -- assets/manifest.json`.
-6. Run `npm run assets:process -- assets/manifest.json` to remove chroma, snap
+   `npm run floorplan -- asset generate --manifest assets/manifest.json --write`.
+6. Run `npm run floorplan -- asset process --manifest assets/manifest.json` to remove chroma, snap
    alpha, resize with nearest-neighbor sampling and constrain the palette.
-7. Run `npm run assets:preview -- assets/manifest.json` and inspect
+7. Run `npm run floorplan -- asset preview --manifest assets/manifest.json` and inspect
    `contact-sheet.png` for identity, perspective, scale and state consistency.
 8. Check that every expected PNG and `assets.card.json` exists. Reject inconsistent
    scale, perspective, lighting or state identity rather than compensating in the map.
-   Run `npm run assets:validate -- assets/manifest.json --strict` before accepting
+   Run `npm run floorplan -- asset validate --manifest assets/manifest.json --strict` before accepting
    production assets.
 9. Add the assets to the card config and place them through the editor or Tiled.
-10. Run `npm run map:validate -- <card.json|map.tmj>` after placement.
+10. Use `npm run floorplan --` for deterministic map operations. Inspect before
+    editing; preview object mutations without `--write`, review the JSON change, then
+    authorize the same command with `--write`. Do not bypass failed validation.
 11. Maintain `assets/scenarios.json` with normal, active and unavailable device states.
-    Run `npm run map:scenarios` and inspect the complete-map `overview.png`; do not
+    Run `npm run floorplan -- review` and inspect the complete-map overview; do not
     approve assets based only on the asset contact sheet.
 12. Compare the complete scenario set to reviewed baselines with `npm run map:regress`.
     Use `map:diff` for investigating one image. Inspect highlighted diffs, JSON bounds,
